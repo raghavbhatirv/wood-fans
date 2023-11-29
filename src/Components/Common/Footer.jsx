@@ -8,7 +8,7 @@ function Footer() {
         <div>
           <img src={logo} className="hover:cursor-pointer" />
         </div>
-        <div className="flex flex-col md:flex-row justify-between text-lg md:text-base gap-5  md:gap-24">
+        <div className="flex flex-col md:flex-row justify-between text-base md:text-sm gap-5  md:gap-24">
           <div className="flex flex-col gap-2 ">
             <p className="hover:cursor-pointer">Catalogue</p>
             <p className="hover:cursor-pointer">Children's furniture</p>
@@ -24,6 +24,7 @@ function Footer() {
           </div>
           <div className="flex flex-col gap-2 ">
             <p className="hover:cursor-pointer">Privacy Policy </p>
+            <p className="hover:cursor-pointer">Disclaimer </p>
             <p className="hover:cursor-pointer">Refund Policy</p>
             <p className="hover:cursor-pointer">Return Policy</p>
           </div>
@@ -34,14 +35,14 @@ function Footer() {
           <p className="leading-8">
             Factory opening hours: <br /> Mon-Fri 10:00 - 19:00
           </p>
-          <div className="flex gap-3 text-2xl md:text-xl pt-2">
+          <div className="flex gap-3 text-xl md:text-lg pt-2">
             <i className="fa-brands fa-instagram hover:cursor-pointer"></i>
             <i className="fa-brands fa-twitter hover:cursor-pointer"></i>
             <i className="fa-brands fa-facebook hover:cursor-pointer"></i>
           </div>
         </div>
       </div>
-      <div className="text-center pb-5 text-base md:text-sm text-dark-gray">
+      <div className="text-center pb-5 text-sm md:text-xs text-dark-gray">
         <p>© WOODFANS 2007-2023. Furniture production</p>
       </div>
     </div>
