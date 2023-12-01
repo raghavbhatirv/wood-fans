@@ -9,14 +9,30 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { loginWithEmailAndPassword } from "./Redux/Auth/action";
+import { doc, setDoc } from "firebase/firestore";
+import { storeDB,collection } from "./Services/firebaseConfig";
 
 function App() {
+  
   const dispatch = useDispatch();
 
   const theme = useSelector((store) => store.themeReducer.theme);
 
+  let getUsers = async function () {
+    try {
+      const snapshot = await storeDB.collection("users").get();
+      snapshot.forEach((doc) => {
+        console.log(doc.id, "=>", doc.data());
+      });
+    } catch (err) {
+      console.log("Error getting documents", err);
+    }
+  };
+
+
   const handleTheme = () => {
     dispatch(toggleTheme());
+    getUsers();
   };
 
   // Remember Me functionalites

@@ -1,8 +1,9 @@
 // Import 
 import { auth, googleProvider, storeDB, facebookProvider } from '../../Services/firebaseConfig'
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth'
-import { collection, setDoc, doc } from 'firebase/firestore'
+import { collection, setDoc, doc, getDocs, getDoc } from 'firebase/firestore'
 import { FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from './actionType'
+import axios from 'axios'
 
 // Login Action Methods
 const loginRequest = () => {
@@ -80,7 +81,9 @@ const signUpNewUser = (email, password, name) => async (dispatch) => {
           dispatch(signUpRequest());
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const userId = userCredential.user.uid;
+
           const userDocRef = doc(storeDB, 'users', userId);
+
 
 
           await setDoc(userDocRef, {
@@ -90,8 +93,15 @@ const signUpNewUser = (email, password, name) => async (dispatch) => {
                cart: [],
                wishlist: [],
                order: [],
-
           });
+
+          
+
+          const data = collection(storeDB, "users");
+          const querySnapshot = await getDoc(data);
+
+          console.log(querySnapshot)
+
           dispatch(signUpSuccess(`Welcome, ${name}!`));
      } catch (error) {
           let errorMessage = "Sign-up failed. Please check your information and try again";

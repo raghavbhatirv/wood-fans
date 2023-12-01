@@ -1,4 +1,4 @@
-import { FORGOT_PASSWORD_FAILURE, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from "./actionType"
+import { FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from "./actionType"
 
 const initalState = {
      isAuth: false,
@@ -50,7 +50,7 @@ export const authReducer = (state = initalState, { type, payload }) => {
                     ...state,
                     errorMessage: payload
                }
-          case FORGOT_PASSWORD_SUCCESS:
+          case FORGOT_PASSWORD_SUCCESS :
                return {
                     ...state,
                     successMessage: payload
