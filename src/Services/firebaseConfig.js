@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth'
-import { getFirestore, collection } from 'firebase/firestore'
+import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore'
+
 // TODO: Add SDKs for Firebase products that you want to use
 
 
@@ -30,6 +31,10 @@ export {
      auth,
      storeDB,
      googleProvider,
-     facebookProvider
-     , collection
+     facebookProvider,
+     collection,
+     query,
+     where,
+     getDocs,
+     addDoc
 }
