@@ -12,7 +12,7 @@ function FactoryOrderPortfolio() {
           SEE ALL
         </p>
       </div>
-      <div class="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row gap-8">
         <div className="hover:cursor-pointer hover:scale-105 transition-transform">
           <img src={CurvePouf} />
           <p className="text-xl py-3 md:py-2">CHILDREN'S BED SOFTY "SOFT"</p>
