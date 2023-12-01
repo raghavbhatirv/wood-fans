@@ -9,30 +9,14 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { loginWithEmailAndPassword } from "./Redux/Auth/action";
-import { doc, setDoc } from "firebase/firestore";
-import { storeDB,collection } from "./Services/firebaseConfig";
 
 function App() {
-  
   const dispatch = useDispatch();
 
   const theme = useSelector((store) => store.themeReducer.theme);
 
-  let getUsers = async function () {
-    try {
-      const snapshot = await storeDB.collection("users").get();
-      snapshot.forEach((doc) => {
-        console.log(doc.id, "=>", doc.data());
-      });
-    } catch (err) {
-      console.log("Error getting documents", err);
-    }
-  };
-
-
   const handleTheme = () => {
     dispatch(toggleTheme());
-    getUsers();
   };
 
   // Remember Me functionalites
@@ -47,28 +31,12 @@ function App() {
   */
 
   return (
-    <div className={`${theme ? "bg-light-gray" : "bg-[#242424]"}`}>
-      <nav className="bg-green-700 p-6 text-center">
-        <FontAwesomeIcon
-          icon={theme ? faSun : faMoon}
-          className="text-[25px] text-white"
-          onClick={handleTheme}
-        />
-      </nav>
-      <LoginAndSignup theme={theme} />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={theme ? "light" : "dark"}
-      />
-    </div>
+    <>
+      <div className="font-Poppins">
+        <Home />
+        <Footer />
+      </div>
+    </>
   );
 }
 
