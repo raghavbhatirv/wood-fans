@@ -6,6 +6,7 @@ import OurTeam from "../Components/Homepage/OurTeam";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../Redux/Products/Action";
 import PhotoGallery from "../Components/Homepage/PhotoGallery";
+import ContactUs from "../Components/Homepage/ContactUs";
 function Home() {
   return (
     <div>
@@ -15,6 +16,7 @@ function Home() {
         <FactoryOrderPortfolio />
         <PhotoGallery />
         <OurTeam />
+        <ContactUs />
       </div>
     </div>
   );

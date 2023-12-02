@@ -1,38 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "../../Redux/Products/Action";
-import SingleProductCard from "./SingleProductCard";
-
+import React, { useState } from "react";
+import RandomProducts from "../Common/RandomProducts";
 function BuyersChoice() {
-  const dispatch = useDispatch();
   const [selected, setSelected] = useState("SOFAS");
-  const [currentProducts, setCurrentProducts] = useState([]);
-  const { productData, loading } = useSelector((store) => store.dataReducer);
-
-  function filterByCategoryAndNameLength(category) {
-    const filteredData = productData.filter(
-      (item) =>
-        item.category.toLowerCase() === category.toLowerCase() &&
-        item.name.length <= 20
-    );
-
-    for (let i = filteredData.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [filteredData[i], filteredData[j]] = [filteredData[j], filteredData[i]];
-    }
-
-    const randomProducts = filteredData.slice(0, 4);
-
-    setCurrentProducts(randomProducts);
-  }
-
-  useEffect(() => {
-    dispatch(fetchData());
-  }, []);
-
-  useEffect(() => {
-    filterByCategoryAndNameLength(selected);
-  }, [selected, productData]);
 
   return (
     <div className="pt-10">
@@ -86,14 +55,7 @@ function BuyersChoice() {
           <p className="pb-2 underline cursor-pointer">GO TO CATALOG</p>
         </div>
       </div>
-
-      <div className="py-5">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {currentProducts?.map((product) => (
-            <SingleProductCard key={product.id} {...product} />
-          ))}
-        </div>
-      </div>
+      <RandomProducts selected={selected} />
     </div>
   );
 }
