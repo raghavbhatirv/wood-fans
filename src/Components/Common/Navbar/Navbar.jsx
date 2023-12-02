@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Navbar.module.css";
-import logo from "../../../assets/logo.sv";
+import logo from "../../../assets/logo.svg";
 
 const Navbar = () => {
     const [search, setSearch] = useState("")
