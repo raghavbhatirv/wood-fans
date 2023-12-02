@@ -1,0 +1,32 @@
+#navbar-id{
+    width: 100%;
+    padding: 10px 0px;
+}
+#navbar-id::before{
+    position: absolute;
+    content: "";
+    height: 60px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f8f8;
+    z-index: -1;
+}
+.mobile_menu {
+    position: fixed;
+    top: -1500px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #a3adbb;
+    transition: top 0.3s ease-in-out;
+}
+
+.mobileMenu_active {
+    z-index: 1000;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #a3adbb;
+    transition: top 0.3s ease-in-out;
+}

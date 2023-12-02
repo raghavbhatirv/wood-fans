@@ -1,13 +1,12 @@
-import Navbar from "./Components/Common/Navbar";
+import Navbar from "./Components/Common/Navbar/Navbar";
 import Footer from "./Components/Common/Footer"
+import Home from "./Pages/Home";
 function App() {
   return (
     <>
     <Navbar/>
-    <div class="h-1/4 bg-black float-left w-full">
-      <h2>ggg
-      </h2>
-    </div>
+    <Home/>
+    <Footer/>
     </>
   );
 }
