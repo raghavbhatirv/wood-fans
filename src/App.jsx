@@ -1,11 +1,11 @@
 import Footer from "./Components/Common/Footer";
-import Home from "./Pages/Home";
+import { AllRoutes } from "./Routes/AllRoutes";
 
 function App() {
   return (
     <>
       <div className="font-Poppins">
-        <Home />
+        <AllRoutes />
         <Footer />
       </div>
     </>
