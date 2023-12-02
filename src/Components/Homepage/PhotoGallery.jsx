@@ -4,9 +4,9 @@ function PhotoGallery() {
   return (
     <div className="py-5">
       <div>
-        <h3 className="text-dark text-4xl py-5">Photo gallery of our works</h3>
+        <h3 className="text-dark text-4xl py-10">Photo gallery of our works</h3>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid  sm:grid-cols-2 md:grid-cols-4 gap-4">
         <div className="flex flex-col gap-5">
           <img
             className="object-cover h-96"
