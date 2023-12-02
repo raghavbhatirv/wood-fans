@@ -35,6 +35,7 @@ const ProductPage = () => {
       }
 
     return (
+      
     <div className="font-bold font-franklin lg:px-20 lg:py-10 px-5">
         <h1 className="text-2xl lg:py-5">{category.toUpperCase()}</h1>
         <div className="grid grid-cols-3 gap-5">
