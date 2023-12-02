@@ -6,7 +6,7 @@ function BuyersChoice() {
   return (
     <div className="pt-10">
       <div>
-        <h3 className="text-dark text-4xl">Buyers' choice</h3>
+        <h3 className="text-dark text-3xl md:text-4xl">Buyers' choice</h3>
       </div>
       <div className="flex justify-between pt-10 text-sm gap-5">
         <div className="flex max-w-md overflow-scroll md:max-w-full md:overflow-auto justify-between gap-10 border-b border-gray-200">
