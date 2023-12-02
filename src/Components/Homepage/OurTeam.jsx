@@ -4,14 +4,17 @@ import IvanovAlexey from "./assets/media/Ivanov Alexey.webp";
 import IvanovaElena from "./assets/media/Ivanova Elena.webp";
 function OurTeam() {
   return (
-    <div className="bg-light-gray px-5 py-10">
+    <div className="py-10">
       <div>
         <h3 className="text-dark text-3xl md:text-4xl py-10">Our team</h3>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <div>
           <div>
-            <img src={MaltsevaNina} />
+            <img
+              src={MaltsevaNina}
+              className="hover:scale-105 transition-transform"
+            />
           </div>
           <div>
             <h4 className="text-2xl py-3 md:py-2 font-medium">Maltseva Nina</h4>
@@ -22,7 +25,10 @@ function OurTeam() {
         </div>
         <div>
           <div>
-            <img src={IvanovAlexey} />
+            <img
+              src={IvanovAlexey}
+              className="hover:scale-105 transition-transform"
+            />
           </div>
           <div>
             <h4 className="text-2xl py-3 md:py-2 font-medium">Ivanov Alexey</h4>
@@ -31,7 +37,10 @@ function OurTeam() {
         </div>
         <div>
           <div>
-            <img src={IvanovaElena} />
+            <img
+              src={IvanovaElena}
+              className="hover:scale-105 transition-transform"
+            />
           </div>
           <div>
             <h4 className="text-2xl py-3 md:py-2 font-medium">Ivanova Elena</h4>
