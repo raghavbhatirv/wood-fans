@@ -9,6 +9,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { loginWithEmailAndPassword } from "./Redux/Auth/action";
+import Footer from "./Components/Common/Footer";
+import SingleProduct from "./Pages/SingleProduct";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,8 +35,9 @@ function App() {
   return (
     <>
       <div className="font-Poppins">
-        <Home />
-        <Footer />
+        {/* <LoginAndSignup/>
+        <Footer/> */}
+        <SingleProduct/>
       </div>
     </>
   );

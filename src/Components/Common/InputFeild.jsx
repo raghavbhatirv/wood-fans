@@ -12,7 +12,7 @@ const InputFeild = ({ className, placeholder, onChange, icon, type}) => {
       <div
         className={`border p-2 md:p-3 rounded-sm mb-2 md:mb-4 ${className} flex items-center mt-2 bg-transparent ${
           theme
-            ? "border-black text-black"
+            ? "border-gray-400 text-black"
             : "border-light-gray text-white"
         } `}
       >
