@@ -50,7 +50,7 @@ export const authReducer = (state = initalState, { type, payload }) => {
                     ...state,
                     errorMessage: payload
                }
-          case FORGOT_PASSWORD_SUCCESS:
+          case FORGOT_PASSWORD_SUCCESS :
                return {
                     ...state,
                     successMessage: payload
