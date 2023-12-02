@@ -24,4 +24,4 @@ dist-ssr
 *.sln
 *.sw?
 
-App.jsx
+src/App.jsx
