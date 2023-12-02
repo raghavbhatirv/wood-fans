@@ -4,7 +4,7 @@ import IvanovAlexey from "./assets/media/Ivanov Alexey.webp";
 import IvanovaElena from "./assets/media/Ivanova Elena.webp";
 function OurTeam() {
   return (
-    <div className="bg-light-gray px-5 py-10">
+    <div className="py-10">
       <div>
         <h3 className="text-dark text-3xl md:text-4xl py-10">Our team</h3>
       </div>

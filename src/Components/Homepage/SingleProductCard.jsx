@@ -6,9 +6,14 @@ function SingleProductCard(product) {
   return (
     <div>
       <div>
-        <div>
-          <img src={images[0]} alt={`loading: ${name}`} className="border" />
+        <div className="overflow-hidden">
+          <img
+            src={images[0]}
+            alt={`loading: ${name}`}
+            className="border transform transition duration-500 hover:scale-105"
+          />
         </div>
+
         <div className="flex flex-col gap-1.5 text-gray-900 py-4">
           <p className="text-xs">from ₹{price}</p>
           <h3 className="text-lg">{name}</h3>

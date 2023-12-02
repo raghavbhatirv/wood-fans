@@ -8,7 +8,6 @@ function BuyersChoice() {
   const [selected, setSelected] = useState("SOFAS");
   const [currentProducts, setCurrentProducts] = useState([]);
   const { productData, loading } = useSelector((store) => store.dataReducer);
-  console.log(loading);
 
   function filterByCategoryAndNameLength(category) {
     const filteredData = productData.filter(
@@ -36,7 +35,7 @@ function BuyersChoice() {
   }, [selected, productData]);
 
   return (
-    <div className="bg-light-gray px-5 pt-10">
+    <div className="pt-10">
       <div>
         <h3 className="text-dark text-4xl">Buyers' choice</h3>
       </div>

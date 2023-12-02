@@ -8,7 +8,7 @@ function Footer() {
         <div>
           <img src={logo} className="hover:cursor-pointer" />
         </div>
-        <div className="flex flex-col md:flex-row justify-between text-base md:text-sm gap-5  md:gap-24">
+        <div className="flex flex-col md:flex-row justify-between text-lg md:text-sm gap-5  md:gap-24">
           <div className="flex flex-col gap-2 ">
             <p className="hover:cursor-pointer">Catalogue</p>
             <p className="hover:cursor-pointer">Children's furniture</p>
