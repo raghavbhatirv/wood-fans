@@ -1,3 +1,7 @@
+
+import Navbar from "./Components/Common/Navbar/Navbar";
+import Footer from "./Components/Common/Footer"
+import Home from "./Pages/Home";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import Signup from "./Pages/SignUp&Login/Signup";
@@ -35,12 +39,10 @@ function App() {
   return (
     <>
       <div className="font-Poppins">
-        {/* <LoginAndSignup/>
-        <Footer/> */}
-        <SingleProduct/>
+        
       </div>
     </>
   );
 }
-
+   
 export default App;
