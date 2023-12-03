@@ -1,14 +1,10 @@
-import Footer from "./Components/Common/Footer";
-import Home from "./Pages/Home";
-import UserProfile from "./Pages/UserProfile";
+import SingleProduct from "./Pages/SingleProduct";
 
 function App() {
   return (
     <>
       <div className="font-Poppins">
-        <UserProfile />
-        {/* <Home />
-        <Footer /> */}
+        <SingleProduct />
       </div>
     </>
   );
