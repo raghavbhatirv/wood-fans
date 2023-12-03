@@ -17,7 +17,7 @@ function SingleProductCard({ product, redirectToDetail }) {
           <div className="absolute top-1 right-1 w-10 h-8 p-1 z-10">
             {!wishListClicked ? (
               <i
-                className="fa-regular fa-heart text-xl text-white cursor-pointer opacity-100"
+                className="fa-regular fa-heart text-xl text-gray-700 cursor-pointer opacity-100"
                 onClick={changeWishListState}
               ></i>
             ) : (
@@ -49,7 +49,7 @@ function SingleProductCard({ product, redirectToDetail }) {
       <div className="flex justify-between lg:p-4 p-2">
         <Button
           text={"Add to Cart"}
-          className="bg-gray-600 text-white hover:text-gray-900 px-1 rounded-md hover:bg-gray-400 hover: text-xs lg:px-4 py-2"
+          className="bg-gray-600  text-white hover:text-gray-700 px-1 rounded-md hover:border-2 hover:border-gray-500 hover: text-xs lg:px-4 py-2"
         />
       </div>
     </div>
