@@ -39,7 +39,6 @@ const Signup = ({ onClick }) => {
     <>
       <h1 className="mb-5 md:mb-10 font-semibold text-3xl mt-2">Sign Up</h1>
       {/* Sign Up From */}
-
       <form onSubmit={handleSignUp}>
         <InputFeild
           placeholder="Name"

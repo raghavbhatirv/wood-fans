@@ -9,7 +9,7 @@ function App() {
       <div className="font-Poppins">
         {/* <ProductPage /> */}
         <Navbar />
-        <AllRoutes />
+        <AllRoutes /> 
         <Footer />
       </div>
     </>
