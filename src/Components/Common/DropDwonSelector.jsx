@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 
-const DropDwonSelector = ({ data }) => {
+const DropDwonSelector = ({ data, purpose }) => {
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -32,7 +32,7 @@ const DropDwonSelector = ({ data }) => {
           ? selected?.length > 25
             ? selected?.substring(0, 25) + "..."
             : selected
-          : "Select Country"}
+          : `${purpose}`}
         <BiChevronDown size={20} className={`${open && "rotate-180"}`} />
       </div>
       <ul

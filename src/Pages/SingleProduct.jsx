@@ -29,11 +29,10 @@ const quantityArray = [1, 2, 3, 4];
 
 const SingleProduct = () => {
   const { id } = useParams();
- 
 
   const [productData, setProductData] = useState({});
   const [image, setImage] = useState([]);
-  const [mainImage, setMainImage] = useState(image[0])
+  const [mainImage, setMainImage] = useState(image[0]);
   const productId = id;
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const SingleProduct = () => {
         if (productDocSnapshot.exists()) {
           setProductData({ id: productId, ...productDocSnapshot.data() });
           setImage(productDocSnapshot.data().images);
-          setMainImage(productDocSnapshot.data().images[0])
+          setMainImage(productDocSnapshot.data().images[0]);
         } else {
           console.log("No such document!");
         }
@@ -56,14 +55,13 @@ const SingleProduct = () => {
     fetchProductData();
   }, [productId]);
 
-
   // const actualPrice = getRandomPrice(
   //   (productData?.price * 3) / 2,
   //   productData?.price
   // );
 
   const handleImageChange = (img) => {
-    setMainImage(img)
+    setMainImage(img);
   };
 
   return (
@@ -123,7 +121,7 @@ const SingleProduct = () => {
               &#8377; {productData?.price}
             </h1>
             <h1 className="line-through text-xs md:text-base text-dark-gray font-normal">
-              &#8377; {productData?.price*1.5}
+              &#8377; {productData?.price * 1.5}
             </h1>
             <p className="text-green-600 text-xs md:text-base">
               45% <span className="font-medium">Off</span>
@@ -156,13 +154,16 @@ const SingleProduct = () => {
           {/* Filters */}
           <PopUpSelector />
           <div className="grid grid-cols-2 mt-5 gap-2 text-xs sm:text-base">
-            <DropDwonSelector data={sizeArray} />
-            <DropDwonSelector data={quantityArray} />
+            <DropDwonSelector data={sizeArray} purpose={"Select Size"} />
+            <DropDwonSelector
+              data={quantityArray}
+              purpose={"Select Quantity"}
+            />
           </div>
 
           <div className="mt-5 text-xs md:text-base">
             <p className="text-justify">
-              <span className="font-medium">Description </span>
+              <h3 className="font-bold text-lg pb-1">Description</h3>
               {productData?.description?.short}
             </p>
             <p className="text-justify mt-5">

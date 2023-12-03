@@ -3,7 +3,7 @@ import styles from "./Navbar.module.css";
 import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryChanged } from "../../../Redux/Products/action";
+import { categoryChanged } from "../../../Redux/Products/Action";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
@@ -141,7 +141,7 @@ const Navbar = () => {
                   <ul className="list-none flex">
                     <Link
                       onClick={(event) => categoryChangeInStore(event, "SOFAS")}
-                      to="/product"
+                      to="/products/SOFAS"
                     >
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Sofa's
@@ -149,7 +149,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       onClick={(event) => categoryChangeInStore(event, "BEDS")}
-                      to="/product"
+                      to="/products/BEDS"
                     >
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Beds
@@ -159,7 +159,7 @@ const Navbar = () => {
                       onClick={(event) =>
                         categoryChangeInStore(event, "CHILDREN'S FURNITURE")
                       }
-                      to="/product"
+                      to="/products/CHILDREN'S FURNITURE"
                     >
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Children furniture
@@ -169,7 +169,7 @@ const Navbar = () => {
                       onClick={(event) =>
                         categoryChangeInStore(event, "ARMCHAIRS AND POUFS")
                       }
-                      to="/product"
+                      to="/products/ARMCHAIRS AND POUFS"
                     >
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         ARMCHAIRS AND POUFS

@@ -4,7 +4,7 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { onAuthStateChanged, auth } from "./../../Services/firebaseConfig";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../Redux/Products/action";
+import { addToCart } from "../../Redux/Products/Action";
 function SingleProductCard({ product, redirectToDetail }) {
   const [wishListClicked, setWishListClicked] = useState(false);
   const dispatch = useDispatch();
@@ -46,14 +46,14 @@ function SingleProductCard({ product, redirectToDetail }) {
             src={product.images[0]}
             alt={product.name}
             className="w-full object-cover border transform transition duration-500 hover:scale-105 hover:cursor-pointer"
-            onClick={() => redirectToDetail(product.id)}
+            onClick={() => redirectToDetail(product.id, product.name)}
           />
         </div>
 
         <div className="pt-5 pb-1 px-3 md:px-2 flex  justify-between text-lg ">
           <h4
             className="lg:font-semibold font-normal lg:px-3 hover:cursor-pointer"
-            onClick={() => redirectToDetail(product.id)}
+            onClick={() => redirectToDetail(product.id, product.name)}
           >
             {product.name}
           </h4>
