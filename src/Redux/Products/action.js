@@ -19,3 +19,5 @@ export const fetchData = () => async (dispatch) => {
         dispatch(getDataFailure(error));
     }
 };
+
+

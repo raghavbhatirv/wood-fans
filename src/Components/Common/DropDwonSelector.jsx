@@ -43,7 +43,7 @@ const DropDwonSelector = ({ data }) => {
         {data?.map((item, index) => (
           <li
             key={index}
-            className={`p-2 text-sm hover:bg-primary-yellow hover:text-white`}
+            className={`p-2 text-xs md:text-sm hover:bg-gray-200`}
             onClick={() => {
               if (item !== selected) {
                 setSelected(item);

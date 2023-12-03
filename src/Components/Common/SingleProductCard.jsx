@@ -2,7 +2,7 @@ import React from "react";
 
 function SingleProductCard(product) {
   const { images, price, name, category } = product;
-  console.log(product);
+  // console.log(product);
   return (
     <div>
       <div>
