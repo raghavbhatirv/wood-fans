@@ -50,17 +50,51 @@ const loginWithEmailAndPassword = (email, password) => async (dispatch) => {
 }
 
 // login with Google
+// const loginWithGoogle = () => async (dispatch) => {
+//      try {
+//           dispatch(loginRequest());
+//           const result = await signInWithPopup(auth, googleProvider)
+
+//           dispatch(loginSuccess(`Welcome, ${result.user.displayName}!`))
+
+//      } catch (error) {
+//           dispatch(loginFailure(`Sign-In Error: ${error.message}`))
+//      }
+// }
 const loginWithGoogle = () => async (dispatch) => {
      try {
-          dispatch(loginRequest());
-          const result = await signInWithPopup(auth, googleProvider)
+          dispatch(signUpRequest());
 
-          dispatch(loginSuccess(`Welcome, ${result.user.displayName}!`))
+          const result = await signInWithPopup(auth, googleProvider);
 
+          // Assuming you have a 'users' collection in Firestore
+          const usersCollection = collection(storeDB, 'users');
+          const userId = result.user.uid;
+
+          const userDocRef = doc(usersCollection, userId);
+
+          // Check if the user exists in Firestore
+          const userDocSnapshot = await getDoc(userDocRef);
+
+          if (!userDocSnapshot.exists()) {
+               // If the user doesn't exist, add their data
+               await setDoc(userDocRef, {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    cart: [],
+                    wishlist: [],
+                    order: [],
+               });
+          }
+          dispatch(signUpSuccess(`Welcome, ${result.user.displayName}!`));
      } catch (error) {
-          dispatch(loginFailure(`Sign-In Error: ${error.message}`))
+          let errorMessage = "Sign-up failed. Please check your information and try again";
+          if (error.code === "auth/email-already-in-use") {
+               errorMessage = "The email address is already in use by another account. Please use a different email";
+          }
+          dispatch(signUpFailure(errorMessage));
      }
-}
+};
 
 // login with Facebook
 const loginWithFacebook = () => async () => {
@@ -95,7 +129,7 @@ const signUpNewUser = (email, password, name) => async (dispatch) => {
                order: [],
           });
 
-          
+
 
           const data = collection(storeDB, "users");
           const querySnapshot = await getDoc(data);
