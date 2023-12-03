@@ -4,6 +4,8 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { onAuthStateChanged, auth } from "./../../Services/firebaseConfig";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import {
   addToCart,
   addToWishlist,
@@ -12,6 +14,7 @@ import {
 function SingleProductCard({ product, redirectToDetail }) {
   const [wishListClicked, setWishListClicked] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const productId = product.id;
   const userId = auth?.currentUser?.uid;
 
@@ -23,9 +26,10 @@ function SingleProductCard({ product, redirectToDetail }) {
     if (userId) {
       dispatch(addToCart(productId, userId));
     } else {
-      console.log("User is not logged in");
+      navigate("/login");
     }
   };
+
   const handleAddToWishList = (productId, userId) => {
     if (userId) {
       if (wishListClicked) {
@@ -33,9 +37,9 @@ function SingleProductCard({ product, redirectToDetail }) {
       } else {
         dispatch(addToWishlist(productId, userId));
       }
-      setWishListClicked(!wishListClicked);
+      changeWishListState();
     } else {
-      console.log("User is not logged in");
+      navigate("/login");
     }
   };
 
