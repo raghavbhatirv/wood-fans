@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../Redux/Products/Action";
 import load from "./loading.gif";
 import SingleProductCard from "./SingleProductCard";
+import ProductSkeleton from "./ProductSkeleton";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -31,10 +32,13 @@ const ProductPage = () => {
 
   if (loading) {
     return (
-      <div className="py-20 lg:h-65vh flex items-center justify-center">
-        <div>
-          <img src={load} alt="" />
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-5 lg:px-20 py-3 md:py-10 px-5">
+        <ProductSkeleton />
+        <ProductSkeleton />
+        <ProductSkeleton />
+        <ProductSkeleton />
+        <ProductSkeleton />
+        <ProductSkeleton />
       </div>
     );
   }
