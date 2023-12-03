@@ -35,10 +35,10 @@ const ProductPage = () => {
       }
 
     return (
-      
+
     <div className="font-bold font-franklin lg:px-20 lg:py-10 px-5">
         <h1 className="text-2xl lg:py-5">{category.toUpperCase()}</h1>
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {
             categoryData.map((product) => (
             <div key={product.id} className="shadow-md overflow-hidden" >
@@ -49,17 +49,15 @@ const ProductPage = () => {
              </svg>
 
               
-            <img src={product.images[0]} alt="" className="w-full lg:h-3/5 object-cover" />
+            <img src={product.images[0]} alt="" className="w-full lg:h-3/5  object-cover" />
   
               </div>
-              <div className="p-2 lg:p-5 flex lg:gap-40 gap-5 md:gap-20">
-                <h4 className="lg:font-semibold font-normal lg:px-5 text-xs lg:text-base" >{product.name}</h4>
-                <p className="text-gray-700 text-xs lg:text-base md:pl-5" >RS {product.price}</p>
+              <div className="p-2 lg:p-5 flex lg:gap-40 gap-5 md:gap-20 justify-between">
+                <h4 className="lg:font-semibold font-normal lg:px-5 text-base lg:text-base" >{product.name}</h4>
+                <p className="text-gray-700 text-base lg:text-base md:pl-5" >RS {product.price}</p>
               </div>
               </div>
               <div className="flex justify-between lg:p-4 p-0">
-                {/* <button onClick={() => { dispatch(AddToCart([{ ...product, qty: 1 }])) }}>Add to Cart
-                </button> */}
                 <Button text={"Add to Cart"} className="bg-gray-800 text-white px-1 py-2 rounded-md hover:bg-gray-700 text-xs lg:px-4 py-2" />
               </div>
             </div>
