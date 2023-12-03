@@ -13,7 +13,7 @@ function Home() {
     <div>
       <Hero />
       <div className="px-5">
-        <BuyersChoice />
+        <BuyersChoice title={"Buyers' choice"}/>
         <FactoryOrderPortfolio />
         <PhotoGallery />
         <ClientsReviews />
