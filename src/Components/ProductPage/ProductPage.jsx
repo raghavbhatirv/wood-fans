@@ -1,63 +1,56 @@
-import React, { useEffect, useState } from 'react'
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./productContainer.module.css"
-import { useDispatch, useSelector } from 'react-redux';
-import { store } from '../../Redux/store';
-// import { AddToCart } from "../../Redux/productReducer/action";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "../../Redux/Products/Action";
+import load from "./loading.gif";
+import SingleProductCard from "./SingleProductCard";
 
 const ProductPage = () => {
-    const [products, setProducts] = useState([])
-    const [loading, setLoading] = useState([])
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    const productType = useSelector(store => store.productReducer.productType)
-    console.log(productType)
+  const { productData, loading, category } = useSelector(
+    (store) => store.dataReducer
+  );
 
-    
-    useEffect(() => {
-    //     dispatch(getData(productType))
-    setProducts([{
-        "id": 1,
-        "title":"DAVE SOFA",
-        "type":"Sofas",
-        "image": "https://api.woodfans.ru/storage/uploads/images/x9V57EeEsrvL9zWFSIUSK1766CK76PQ93XjrLDw1_widened_900.jpg",
-        "url1": "https://api.woodfans.ru/storage/uploads/images/CP65GN3NT3mxIemo9wXMFbJ19sPBXfhe0F9Ivr81_widened_900.jpg",
-        "url2": "https://api.woodfans.ru/storage/uploads/images/ESkUCJSMHzb62y1NeOkuTIEezKsjx0QzHOBb5Bd1_widened_900.jpg",
-        "url3": "https://api.woodfans.ru/storage/uploads/images/M83cTDULNmEr8rJ2qaOouPQjhpirGNXWStoLOKTG_widened_900.jpg",
-        "price": 252000
-      }])
-    }, [productType])
-    
-    if (loading) {
-        return (
-          <div className={styles.loading}><div><img src={load} alt="" /></div></div>
-        )
-      }
+  useEffect(() => {
+    dispatch(fetchData());
+  }, []);
 
-    return (<div className={styles.container}>
-        <h1>{data.type}</h1>
-        <div className={styles.singleCard}>
-          {
-            products.map((product) => (<div key={product.id}>
-              <img src={product.image} alt="" />
-  
-              <div className={styles.nameDiv}>
-                <h4>{product.name}{product.title}</h4>
-                <p>RS {product.price}</p>
-              </div>
-              <div className={styles.priceDiv}>
-                <p style={{ "marginTop": "0em" }}>  <Link to={`/product`}>More details</Link></p>
-                <p> {product.cost}</p>
-                <button onClick={() => { dispatch(AddToCart([{ ...product, qty: 1 }])) }}>Add to Cart
-                </button>
-              </div>
-            </div>
-            ))
-          }
+  const categoryData = productData.filter((product) => {
+    if (category == null) {
+      return productData;
+    }
+    return product.category.toLowerCase() === category.toLowerCase();
+  });
+
+  const redirectToDetail = (id) => {
+    console.log(id);
+  };
+
+  if (loading) {
+    return (
+      <div className="py-20 lg:h-65vh flex items-center justify-center">
+        <div>
+          <img src={load} alt="" />
         </div>
-      </div>)
-}
+      </div>
+    );
+  }
 
+  return (
+    <div className="font-semibold lg:px-20 py-3 md:py-10 px-5">
+      <h1 className="text-3xl py-5">{category?.toUpperCase()}</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-5">
+        {categoryData.map((product) => (
+          <SingleProductCard
+            key={product.id}
+            product={product}
+            redirectToDetail={redirectToDetail}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
-export default ProductPage
+export default ProductPage;
