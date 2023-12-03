@@ -4,7 +4,6 @@ import Home from "../Pages/Home";
 import LoginAndSignup from "../Pages/SignUp&Login/LoginAndSignup";
 import Signup from "../Pages/SignUp&Login/Signup";
 import ProductPage from "../Components/ProductPage/ProductPage";
-import LoginAndSignup from "../Pages/SignUp&Login/LoginAndSignup"
 
 const AllRoutes = () => {
   return (
