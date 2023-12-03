@@ -1,5 +1,5 @@
-import { storeDB, query, collection, getDocs, doc, updateDoc, arrayUnion, arrayRemove } from '../../Services/firebaseConfig'
-import { DATA_GET_REQUEST, DATA_GET_SUCCESS, DATA_GET_FAILURE } from './actionTypes';
+import { storeDB, query, collection, getDoc, getDocs, doc, updateDoc, arrayUnion, arrayRemove } from '../../Services/firebaseConfig'
+import { DATA_GET_REQUEST, DATA_GET_SUCCESS, DATA_GET_FAILURE, CART_GET_REQUEST, CART_GET_SUCCESS, CART_GET_FAILURE } from './actionTypes';
 
 export const getDataRequest = () => ({ type: DATA_GET_REQUEST });
 export const getDataSuccess = (data) => ({ type: DATA_GET_SUCCESS, payload: data });
@@ -56,3 +56,22 @@ export const removeFromWishlist = (productId, userId) => async (dispatch) => {
     }
 };
 
+
+
+export const getCartDataRequest = () => ({ type: CART_GET_REQUEST });
+export const getCartDataSuccess = (data) => ({ type: CART_GET_SUCCESS, payload: data });
+export const getCartDataFailure = (error) => ({ type: CART_GET_FAILURE, payload: error });
+
+export const fetchCartData = (userId) => async (dispatch) => {
+    dispatch(getCartDataRequest());
+    try {
+        const userRef = doc(storeDB, 'users', userId);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.data();
+        const cartData = userData.cart;
+        dispatch(getCartDataSuccess(cartData));
+    } catch (error) {
+        console.log(error);
+        dispatch(getCartDataFailure(error));
+    }
+};

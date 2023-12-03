@@ -2,32 +2,47 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
+import { fetchCartData } from "../../../Redux/Products/action";
+import { useId } from "react";
 
 const Navbar = () => {
   const category = useSelector((store) => store.dataReducer);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
   const [authStatus, setAuthStatus] = useState(null);
   const userName = authStatus?.displayName?.split(" ");
   const isMounted = useRef(true);
+  // const userId = auth?.currentUser?.uid;
 
+  const { cartData } = useSelector((store) => store.cartReducer);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (isMounted.current) {
         setAuthStatus(user);
+        const userId = user?.uid;
+        if (userId) {
+          dispatch(fetchCartData(userId));
+        }
       }
     });
     return () => {
       isMounted.current = false;
       unsubscribe();
     };
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (cartData?.length > 0) {
+      setCartValue(cartData.length);
+    }
+  }, [cartData]);
 
   const toggleMobileMenu = () => {
     setMobileMenuActive(!isMobileMenuActive);

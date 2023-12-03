@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "../Common/Button";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { onAuthStateChanged, auth } from "./../../Services/firebaseConfig";
 import { useDispatch } from "react-redux";
@@ -9,14 +8,17 @@ import { useNavigate } from "react-router-dom";
 import {
   addToCart,
   addToWishlist,
+  fetchCartData,
   removeFromWishlist,
-} from "../../Redux/Products/Action";
+} from "../../Redux/Products/action";
+import PopupMessage from "../Common/PopupMessage";
 function SingleProductCard({ product, redirectToDetail }) {
   const [wishListClicked, setWishListClicked] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const productId = product.id;
   const userId = auth?.currentUser?.uid;
+  const [showPopup, setShowPopup] = useState(false);
 
   const changeWishListState = () => {
     setWishListClicked((pre) => !pre);
@@ -25,6 +27,9 @@ function SingleProductCard({ product, redirectToDetail }) {
   const handleAddToCart = (productId, userId) => {
     if (userId) {
       dispatch(addToCart(productId, userId));
+      dispatch(fetchCartData(userId));
+      setShowPopup(true);
+      setTimeout(() => setShowPopup(false), 1000);
     } else {
       navigate("/login");
     }
@@ -45,6 +50,7 @@ function SingleProductCard({ product, redirectToDetail }) {
 
   return (
     <div className="shadow-sm shadow-gray-300 overflow-hidden">
+      {showPopup && <PopupMessage message={"Product added to cart!"} />}
       <div>
         <div className="relative overflow-hidden h-[22rem]">
           <div className="absolute top-1 right-1 w-10 h-8 p-1 z-10">
