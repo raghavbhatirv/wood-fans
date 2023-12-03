@@ -9,20 +9,19 @@ function SingleProductCard({ product, redirectToDetail }) {
   const [wishListClicked, setWishListClicked] = useState(false);
   const dispatch = useDispatch();
   const productId = product.id;
-  // const userId = auth?.currentUser.uid;
+  const userId = auth?.currentUser.uid;
 
   const changeWishListState = () => {
     setWishListClicked((pre) => !pre);
   };
 
-  // const handleAddToCart = (
-  //   productId = "ZANYXyviZ7b7FJP9yYt2OiuTIz73",
-  //   userId
-  // ) => {
-  //   dispatch(addToCart(productId, userId));
-  //   alert("added to cart");
-  //   return;
-  // };
+  const handleAddToCart = (
+    productId,
+    userId = "ZANYXyviZ7b7FJP9yYt2OiuTIz73"
+  ) => {
+    dispatch(addToCart(productId, userId));
+    console.log(productId, " ", userId);
+  };
 
   return (
     <div className="shadow-sm shadow-gray-300 overflow-hidden">
@@ -64,6 +63,7 @@ function SingleProductCard({ product, redirectToDetail }) {
         <Button
           text={"Add to Cart"}
           className="bg-gray-600  text-white hover:text-gray-700 rounded-md hover:border-2 hover:border-gray-500"
+          onClick={handleAddToCart}
         />
       </div>
     </div>

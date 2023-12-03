@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../Redux/Products/Action";
 import load from "./loading.gif";
@@ -9,17 +9,16 @@ import ProductSkeleton from "./ProductSkeleton";
 const ProductPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { category } = useParams();
 
-  const { productData, loading, category } = useSelector(
-    (store) => store.dataReducer
-  );
+  const { productData, loading } = useSelector((store) => store.dataReducer);
 
   useEffect(() => {
     dispatch(fetchData());
   }, []);
 
   const categoryData = productData.filter((product) => {
-    if (category == null) {
+    if (category == "all") {
       return productData;
     }
     return product.category.toLowerCase() === category.toLowerCase();
