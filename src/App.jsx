@@ -3,8 +3,6 @@ import ProductPage from "./Components/ProductPage/ProductPage";
 import { AllRoutes } from "./Routes/AllRoutes";
 
 function App() {
-  
-
   return (
     <>
       <div className="font-Poppins">
@@ -15,5 +13,5 @@ function App() {
     </>
   );
 }
-   
+
 export default App;
