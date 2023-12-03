@@ -2,13 +2,27 @@ import React from "react";
 import Button from "../Common/Button";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-
+import { onAuthStateChanged, auth } from "./../../Services/firebaseConfig";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Redux/Products/action";
 function SingleProductCard({ product, redirectToDetail }) {
   const [wishListClicked, setWishListClicked] = useState(false);
+  const dispatch = useDispatch();
+  const productId = product.id;
+  // const userId = auth?.currentUser.uid;
 
   const changeWishListState = () => {
     setWishListClicked((pre) => !pre);
   };
+
+  // const handleAddToCart = (
+  //   productId = "ZANYXyviZ7b7FJP9yYt2OiuTIz73",
+  //   userId
+  // ) => {
+  //   dispatch(addToCart(productId, userId));
+  //   alert("added to cart");
+  //   return;
+  // };
 
   return (
     <div className="shadow-md overflow-hidden">

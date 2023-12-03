@@ -34,14 +34,14 @@ const Navbar = () => {
   const toggleMobileMenu = () => {
     setMobileMenuActive(!isMobileMenuActive);
   };
-  const searchData = () => { };
+  const searchData = () => {};
   const toHome = () => {
     navigate("/");
   };
-  const mobileMenuLoginBtn = ()=>{
+  const mobileMenuLoginBtn = () => {
     navigate("/login");
-    setMobileMenuActive(false)
-  }
+    setMobileMenuActive(false);
+  };
   const categoryChangeInStore = (event, value) => {
     dispatch(categoryChanged(value));
   };
@@ -99,15 +99,17 @@ const Navbar = () => {
                     </a>
                   </div>
                   <div className="max-sm:hidden">
-                    {authStatus ?
-                      <p className=" font-medium text-sm">Hello, {userName[0]}</p>
-                      :
+                    {authStatus ? (
+                      <p className=" font-medium text-sm">
+                        Hello, {userName[0]}
+                      </p>
+                    ) : (
                       <Link to="/login">
                         <p className="text-sm font-semibold max-sm:text-base">
                           Login/SignUp
                         </p>
                       </Link>
-                    }
+                    )}
                   </div>
                   <div className="flex items-center justify-between gap-5">
                     <div className="relative">
@@ -194,8 +196,9 @@ const Navbar = () => {
       </div>
       {/* Mobile Menu */}
       <div
-        className={`${isMobileMenuActive ? styles.mobileMenu_active : styles.mobile_menu
-          } hidden max-lg:block`}
+        className={`${
+          isMobileMenuActive ? styles.mobileMenu_active : styles.mobile_menu
+        } hidden max-lg:block`}
       >
         <div className="p-4">
           <div>
@@ -270,18 +273,18 @@ const Navbar = () => {
           <div></div>
           <div className="text-center py-2">
             <div className="pt-1 pb-6">
-              {authStatus ?
+              {authStatus ? (
                 <p className=" font-medium text-lg">Hello, {userName[0]}</p>
-                :
+              ) : (
                 <Link to="/login">
-                  <Button 
-                     text="Login/Signup"
-                     type="button"
-                     onClick={mobileMenuLoginBtn}
-                     className={` text-[16px] bg-dark text-white`}
+                  <Button
+                    text="Login/Signup"
+                    type="button"
+                    onClick={mobileMenuLoginBtn}
+                    className={` text-[16px] bg-dark text-white`}
                   />
                 </Link>
-              }
+              )}
             </div>
             <p className="font-bold text-lg text-white">+7 (926) 787-11-00</p>
             <p className="text-lg text-gray italic">Modern Furniture factory</p>
