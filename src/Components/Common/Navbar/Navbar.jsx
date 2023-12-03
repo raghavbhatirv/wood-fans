@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryChanged } from "../../../Redux/Products/Action";
+import { categoryChanged } from "../../../Redux/Products/action";
+import shoppingbag from "../../../assets/shoppingbag.svg";
+import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
+import Button from "../Button";
 
 const Navbar = () => {
   const category = useSelector((store) => store.dataReducer);
@@ -12,14 +15,33 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
+  const [authStatus, setAuthStatus] = useState(null);
+  const userName = authStatus?.displayName?.split(" ");
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (isMounted.current) {
+        setAuthStatus(user);
+      }
+    });
+    return () => {
+      isMounted.current = false;
+      unsubscribe();
+    };
+  }, []);
+
   const toggleMobileMenu = () => {
     setMobileMenuActive(!isMobileMenuActive);
   };
-
-  const searchData = () => {};
+  const searchData = () => { };
   const toHome = () => {
     navigate("/");
   };
+  const mobileMenuLoginBtn = ()=>{
+    navigate("/login");
+    setMobileMenuActive(false)
+  }
   const categoryChangeInStore = (event, value) => {
     dispatch(categoryChanged(value));
   };
@@ -77,18 +99,22 @@ const Navbar = () => {
                     </a>
                   </div>
                   <div className="max-sm:hidden">
-                    <Link to="/login">
-                      <p className="text-sm font-semibold max-sm:text-base">
-                        Login/SignUp
-                      </p>
-                    </Link>
+                    {authStatus ?
+                      <p className=" font-medium text-sm">Hello, {userName[0]}</p>
+                      :
+                      <Link to="/login">
+                        <p className="text-sm font-semibold max-sm:text-base">
+                          Login/SignUp
+                        </p>
+                      </Link>
+                    }
                   </div>
                   <div className="flex items-center justify-between gap-5">
                     <div className="relative">
                       <Link to="/cart">
-                        <i className="fa-solid fa-bag-shopping max-sm:text-3xl text-3xl"></i>
+                        <img className="w-8 max-sm:w-9" src={shoppingbag}></img>
                       </Link>
-                      <p className="text-white text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-2">
+                      <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
                         {cartValue}
                       </p>
                     </div>
@@ -168,9 +194,8 @@ const Navbar = () => {
       </div>
       {/* Mobile Menu */}
       <div
-        className={`${
-          isMobileMenuActive ? styles.mobileMenu_active : styles.mobile_menu
-        } hidden max-lg:block`}
+        className={`${isMobileMenuActive ? styles.mobileMenu_active : styles.mobile_menu
+          } hidden max-lg:block`}
       >
         <div className="p-4">
           <div>
@@ -243,7 +268,21 @@ const Navbar = () => {
             </ul>
           </div>
           <div></div>
-          <div className="text-center py-3">
+          <div className="text-center py-2">
+            <div className="pt-1 pb-6">
+              {authStatus ?
+                <p className=" font-medium text-lg">Hello, {userName[0]}</p>
+                :
+                <Link to="/login">
+                  <Button 
+                     text="Login/Signup"
+                     type="button"
+                     onClick={mobileMenuLoginBtn}
+                     className={` text-[16px] bg-dark text-white`}
+                  />
+                </Link>
+              }
+            </div>
             <p className="font-bold text-lg text-white">+7 (926) 787-11-00</p>
             <p className="text-lg text-gray italic">Modern Furniture factory</p>
           </div>
