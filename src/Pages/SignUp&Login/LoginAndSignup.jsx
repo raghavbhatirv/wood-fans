@@ -11,7 +11,7 @@ import Signup from "./Signup";
 import Login from "./Login";
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithFacebook, loginWithGoogle } from "../../Redux/Auth/action";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const LoginAndSignup = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -69,7 +69,8 @@ const LoginAndSignup = () => {
           <h2 className="text-x3l lg:text-4xl absolute top-5 left-5 text-black leading-35 font-medium">
             Unlock a world!
             <br />
-            <span className="text-[#a52a2a]">of furniture </span><br/>
+            <span className="text-[#a52a2a]">of furniture </span>
+            <br />
             Designs
           </h2>
         ) : (

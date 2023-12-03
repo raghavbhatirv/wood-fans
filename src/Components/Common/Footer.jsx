@@ -3,7 +3,7 @@ import logo from "../../assets/logo.svg";
 
 function Footer() {
   return (
-    <div className="bg-light-gray text-dark ">
+    <div className="bg-light-gray text-dark">
       <div className="flex flex-col md:flex-row justify-between px-8 md:px-12 py-10 gap-5">
         <div>
           <img src={logo} className="hover:cursor-pointer" />

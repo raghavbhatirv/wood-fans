@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../Redux/Products/action";
 import load from "./loading.gif";
@@ -7,6 +7,7 @@ import SingleProductCard from "./SingleProductCard";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { productData, loading, category } = useSelector(
     (store) => store.dataReducer
@@ -25,6 +26,7 @@ const ProductPage = () => {
 
   const redirectToDetail = (id) => {
     console.log(id);
+    navigate(id);
   };
 
   if (loading) {
