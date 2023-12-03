@@ -3,7 +3,7 @@ import styles from "./Navbar.module.css";
 import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryChanged } from "../../../Redux/Products/action";
+import { categoryChanged } from "../../../Redux/Products/Action";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
@@ -34,14 +34,14 @@ const Navbar = () => {
   const toggleMobileMenu = () => {
     setMobileMenuActive(!isMobileMenuActive);
   };
-  const searchData = () => { };
+  const searchData = () => {};
   const toHome = () => {
     navigate("/");
   };
-  const mobileMenuLoginBtn = ()=>{
+  const mobileMenuLoginBtn = () => {
     navigate("/login");
-    setMobileMenuActive(false)
-  }
+    setMobileMenuActive(false);
+  };
   const categoryChangeInStore = (event, value) => {
     dispatch(categoryChanged(value));
   };
@@ -99,15 +99,17 @@ const Navbar = () => {
                     </a>
                   </div>
                   <div className="max-sm:hidden">
-                    {authStatus ?
-                      <p className=" font-medium text-sm">Hello, {userName[0]}</p>
-                      :
+                    {authStatus ? (
+                      <p className=" font-medium text-sm">
+                        Hello, {userName[0]}
+                      </p>
+                    ) : (
                       <Link to="/login">
                         <p className="text-sm font-semibold max-sm:text-base">
                           Login/SignUp
                         </p>
                       </Link>
-                    }
+                    )}
                   </div>
                   <div className="flex items-center justify-between gap-5">
                     <div className="relative">
@@ -139,7 +141,7 @@ const Navbar = () => {
                   <ul className="list-none flex">
                     <Link
                       onClick={(event) => categoryChangeInStore(event, "SOFAS")}
-                      to="/product"
+                      to="/products/SOFAS"
                     >
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Sofa's
@@ -147,7 +149,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       onClick={(event) => categoryChangeInStore(event, "BEDS")}
-                      to="/product"
+                      to="/products/BEDS"
                     >
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Beds
@@ -157,7 +159,7 @@ const Navbar = () => {
                       onClick={(event) =>
                         categoryChangeInStore(event, "CHILDREN'S FURNITURE")
                       }
-                      to="/product"
+                      to="/products/CHILDREN'S FURNITURE"
                     >
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Children furniture
@@ -167,7 +169,7 @@ const Navbar = () => {
                       onClick={(event) =>
                         categoryChangeInStore(event, "ARMCHAIRS AND POUFS")
                       }
-                      to="/product"
+                      to="/products/ARMCHAIRS AND POUFS"
                     >
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         ARMCHAIRS AND POUFS
@@ -194,8 +196,9 @@ const Navbar = () => {
       </div>
       {/* Mobile Menu */}
       <div
-        className={`${isMobileMenuActive ? styles.mobileMenu_active : styles.mobile_menu
-          } hidden max-lg:block`}
+        className={`${
+          isMobileMenuActive ? styles.mobileMenu_active : styles.mobile_menu
+        } hidden max-lg:block`}
       >
         <div className="p-4">
           <div>
@@ -270,18 +273,18 @@ const Navbar = () => {
           <div></div>
           <div className="text-center py-2">
             <div className="pt-1 pb-6">
-              {authStatus ?
+              {authStatus ? (
                 <p className=" font-medium text-lg">Hello, {userName[0]}</p>
-                :
+              ) : (
                 <Link to="/login">
-                  <Button 
-                     text="Login/Signup"
-                     type="button"
-                     onClick={mobileMenuLoginBtn}
-                     className={` text-[16px] bg-dark text-white`}
+                  <Button
+                    text="Login/Signup"
+                    type="button"
+                    onClick={mobileMenuLoginBtn}
+                    className={` text-[16px] bg-dark text-white`}
                   />
                 </Link>
-              }
+              )}
             </div>
             <p className="font-bold text-lg text-white">+7 (926) 787-11-00</p>
             <p className="text-lg text-gray italic">Modern Furniture factory</p>
