@@ -2,15 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { categoryChanged } from "../../../Redux/Products/Action";
+import { useSelector } from "react-redux";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
 
 const Navbar = () => {
   const category = useSelector((store) => store.dataReducer);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
@@ -42,9 +40,7 @@ const Navbar = () => {
     navigate("/login");
     setMobileMenuActive(false);
   };
-  const categoryChangeInStore = (event, value) => {
-    dispatch(categoryChanged(value));
-  };
+
   return (
     <div>
       <div id={styles["navbar-id"]} className="max-sm:bg-gray-200 shadow">
@@ -139,46 +135,27 @@ const Navbar = () => {
               <div className="flex justify-between items-center">
                 <div className=" max-lg:invisible">
                   <ul className="list-none flex">
-                    <Link
-                      onClick={(event) => categoryChangeInStore(event, "SOFAS")}
-                      to="/products/SOFAS"
-                    >
+                    <Link to="/products/SOFAS">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Sofa's
                       </li>
                     </Link>
-                    <Link
-                      onClick={(event) => categoryChangeInStore(event, "BEDS")}
-                      to="/products/BEDS"
-                    >
+                    <Link to="/products/BEDS">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Beds
                       </li>
                     </Link>
-                    <Link
-                      onClick={(event) =>
-                        categoryChangeInStore(event, "CHILDREN'S FURNITURE")
-                      }
-                      to="/products/CHILDREN'S FURNITURE"
-                    >
+                    <Link to="/products/CHILDREN'S FURNITURE">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Children furniture
                       </li>
                     </Link>
-                    <Link
-                      onClick={(event) =>
-                        categoryChangeInStore(event, "ARMCHAIRS AND POUFS")
-                      }
-                      to="/products/ARMCHAIRS AND POUFS"
-                    >
+                    <Link to="/products/ARMCHAIRS AND POUFS">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         ARMCHAIRS AND POUFS
                       </li>
                     </Link>
-                    <Link
-                      onClick={(event) => categoryChangeInStore(event, null)}
-                      to="/product"
-                    >
+                    <Link to="/products/all">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Products
                       </li>
