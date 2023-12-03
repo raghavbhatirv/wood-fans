@@ -23,7 +23,7 @@ function ClientsReviews() {
                 <p>04/20/2023</p>
               </div>
               <div>
-                <p className="text-xs text-gray-700">
+                <p className="text-xs text-gray-700 text-justify">
                   "Very bright work by designer Natella Mankaeva for her
                   clients. Custom and trendy fabric from Italy fits perfectly
                   into the interior. We have made furniture for Natella's
@@ -34,6 +34,8 @@ function ClientsReviews() {
               </div>
             </div>
           </div>
+
+
           <div className="md:w-1/5">
             <div>
               <img
@@ -47,7 +49,7 @@ function ClientsReviews() {
                 <p>04/20/2023</p>
               </div>
               <div>
-                <p className="text-xs text-gray-700">
+                <p className="text-xs text-gray-700 text-justify">
                   "We made a very stylish radius sofa filled with goose down
                   feathers for a designer's project. Before packaging the
                   product, the client came to visit us and was charged with a
@@ -69,7 +71,7 @@ function ClientsReviews() {
                 <p>04/20/2023</p>
               </div>
               <div>
-                <p className="text-xs text-gray-700">
+                <p className="text-xs text-gray-700 text-justify">
                   "A very popular banquette for our regular customer. Just pay
                   attention to the fabrics chosen in the project and this
                   elegant leather belt. A very stylish custom-made banquette for
@@ -91,7 +93,7 @@ function ClientsReviews() {
                 <p>04/20/2023</p>
               </div>
               <div>
-                <p className="text-xs text-gray-700">
+                <p className="text-xs text-gray-700 text-justify">
                   " Presentation of poufs and a sofa at the Moscow Design and
                   Interior Week exhibition. Visitors appreciated the fabrics and
                   shapes of our poufs. Among the new items was the Curve pouf"
@@ -112,7 +114,7 @@ function ClientsReviews() {
                 <p>04/20/2023</p>
               </div>
               <div>
-                <p className="text-xs text-gray-700">
+                <p className="text-xs text-gray-700 text-justify">
                   "Together with the architectural bureau "Babayants"
                   (babayants), the furniture factory presented a bright sofa for
                   the exhibition stand. Design idea - Artyom and Liya Babayants,

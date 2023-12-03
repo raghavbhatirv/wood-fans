@@ -8,7 +8,7 @@ function App() {
     <>
       <div className="font-Poppins">
         <Navbar />
-        <AllRoutes />
+        <AllRoutes /> 
         <Footer />
       </div>
     </>
