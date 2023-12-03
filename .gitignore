@@ -23,6 +23,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
 App.jsx
 
