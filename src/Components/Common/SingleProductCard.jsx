@@ -2,6 +2,7 @@ import React from "react";
 
 function SingleProductCard(product) {
   const { images, price, name, category } = product;
+
   return (
     <div>
       <div>

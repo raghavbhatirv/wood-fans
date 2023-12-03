@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../Redux/Products/Action";
 import SingleProductCard from "./SingleProductCard";
 import { filterByCategoryAndNameLength } from "./common";
+
+
 function RandomProducts({ selected }) {
   const dispatch = useDispatch();
   const [currentProducts, setCurrentProducts] = useState([]);

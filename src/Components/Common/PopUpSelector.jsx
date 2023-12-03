@@ -3,31 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import { popUpSelector } from "../../Functions/scripts";
-
-const Options = ({ texture, name, polyester, meter, place, onClick }) => {
-  return (
-    <div
-      className="flex justify-evenly w-full items-center gap-32 rounded-lg border px-5 cursor-pointer"
-      onClick={onClick}
-    >
-      <div className="flex items-center gap-3">
-        <img src={texture} className="w-[100px] h-[100px]" />
-        <h1>{name}</h1>
-      </div>
-      <h1>{place}</h1>
-      <h1>{polyester}</h1>
-      <h1>
-        {meter}
-        <sup>2</sup>
-      </h1>
-    </div>
-  );
-};
+import PopUpOptions from "./PopUpOptions";
 
 const PopUpSelector = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedTexture, setSelectedTexture] = useState({});
   const [texture, setTexture] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
   const modalRef = useRef();
 
   useEffect(() => {
@@ -50,6 +32,7 @@ const PopUpSelector = () => {
   };
 
   const handlePopUpSelect = (id) => {
+    setSelectedId(id);
     const selected = popUpSelector.find((item) => item.id === id);
     setSelectedTexture(selected);
   };
@@ -57,8 +40,6 @@ const PopUpSelector = () => {
     setTexture(true);
     setShowModal(false);
   };
-
-  console.log(selectedTexture);
 
   return (
     <div className="mt-5">
@@ -70,14 +51,21 @@ const PopUpSelector = () => {
         className="p-1 border rounded-sm mt-1 flex flex-col"
         onClick={handleSelectClick}
       >
-         <img src={selectedTexture?.texture} className={`h-[160px] ${texture ? "block" : "hidden"}`} />
+        <img
+          src={selectedTexture?.texture}
+          className={`h-16 md:h-40 ${texture ? "block" : "hidden"}`}
+        />
 
+        <div className={`p-2 flex ${texture && "justify-between"} text-xs md:text-base`}>
+          <p className={`${texture ? "block font-medium" : "hidden"}`}>
+            {selectedTexture?.name}
+          </p>
 
-        <div className={`p-2 flex ${texture && "justify-between"}`}>
-          <p className={`${texture ? "block font-medium" : "hidden"}`}>{selectedTexture?.name}</p>
-
-
-          <div className={`flex ${texture ? "justify-end" : "justify-between"} gap-2 items-center w-full`}>
+          <div
+            className={`flex ${
+              texture ? "justify-end" : "justify-between"
+            } gap-2 items-center w-full`}
+          >
             <p>Choose</p>
             <FontAwesomeIcon icon={faChevronDown} />
           </div>
@@ -88,13 +76,14 @@ const PopUpSelector = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-all duration-100">
           <div
             ref={modalRef}
-            className="bg-white p-8 rounded shadow-lg transition-all duration-100"
+            className="bg-white w-[90%] md:w-[60%] px-4 py-5 m-10 rounded shadow-lg transition-all duration-100 z-1"
           >
             <div>
               <div className="w-full flex flex-col gap-2 max-h-80 overflow-y-auto">
                 {popUpSelector?.map((item) => {
                   return (
-                    <Options
+                    <PopUpOptions
+                      id={item.id}
                       key={item.id}
                       texture={item.texture}
                       name={item.name}
@@ -102,6 +91,7 @@ const PopUpSelector = () => {
                       place={item.place}
                       meter={item.meter}
                       onClick={() => handlePopUpSelect(item.id)}
+                      selected={selectedId}
                     />
                   );
                 })}
