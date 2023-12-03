@@ -2,16 +2,18 @@ import React from "react";
 import Button from "../Common/Button";
 import { useState } from "react";
 import { onAuthStateChanged, auth } from "./../../Services/firebaseConfig";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
   addToCart,
   addToWishlist,
   fetchCartData,
+  fetchWishlistData,
   removeFromWishlist,
 } from "../../Redux/Products/action";
 import PopupMessage from "../Common/PopupMessage";
+import { useEffect } from "react";
 function SingleProductCard({ product, redirectToDetail }) {
   const [wishListClicked, setWishListClicked] = useState(false);
   const dispatch = useDispatch();
@@ -20,6 +22,9 @@ function SingleProductCard({ product, redirectToDetail }) {
   const userId = auth?.currentUser?.uid;
   const [showPopup, setShowPopup] = useState(false);
 
+  const { wishlistData, loading } = useSelector(
+    (store) => store.wishlistReducer
+  );
   const changeWishListState = () => {
     setWishListClicked((pre) => !pre);
   };
@@ -47,6 +52,18 @@ function SingleProductCard({ product, redirectToDetail }) {
       navigate("/login");
     }
   };
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchWishlistData(userId));
+    }
+  }, [userId, dispatch]);
+
+  useEffect(() => {
+    if (!loading) {
+      const isInWishlist = wishlistData.includes(productId);
+      setWishListClicked(isInWishlist);
+    }
+  }, [wishlistData, productId, loading]);
 
   return (
     <div className="shadow-sm shadow-gray-300 overflow-hidden">
