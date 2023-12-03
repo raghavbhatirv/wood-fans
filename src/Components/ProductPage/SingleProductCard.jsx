@@ -27,7 +27,7 @@ function SingleProductCard({ product, redirectToDetail }) {
   return (
     <div className="shadow-sm shadow-gray-300 overflow-hidden">
       <div>
-        <div className="relative overflow-hidden h-[25rem]">
+        <div className="relative overflow-hidden h-[22rem]">
           <div className="absolute top-1 right-1 w-10 h-8 p-1 z-10">
             {!wishListClicked ? (
               <i
@@ -50,7 +50,7 @@ function SingleProductCard({ product, redirectToDetail }) {
           />
         </div>
 
-        <div className="py-5 px-3 md:px-2 flex  justify-between text-lg ">
+        <div className="pt-5 pb-1 px-3 md:px-2 flex  justify-between text-lg ">
           <h4
             className="lg:font-semibold font-normal lg:px-3 hover:cursor-pointer"
             onClick={() => redirectToDetail(product.id)}
@@ -63,7 +63,6 @@ function SingleProductCard({ product, redirectToDetail }) {
       <div className="flex justify-between lg:p-4 p-2">
         <Button
           text={"Add to Cart"}
-          // className="bg-gray-600  text-white hover:text-gray-700 px-1 rounded-md hover:border-2 hover:border-gray-500 hover: text-xs lg:px-4 py-2"
           className="bg-gray-600  text-white hover:text-gray-700 rounded-md hover:border-2 hover:border-gray-500"
         />
       </div>
