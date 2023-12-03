@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, onAuthStateChanged } from 'firebase/auth'
-import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore'
+import { getFirestore, collection, query, where, getDocs, addDoc, getDoc } from 'firebase/firestore'
 
 
 
