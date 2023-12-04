@@ -5,20 +5,20 @@ const OrderConfirmation = () => {
   const navigate = useNavigate();
   const [count, setCount] = useState(5)
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setCount((prevCount) => prevCount - 1);
-  //   }, 1000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
 
-  //   const timeoutId = setTimeout(() => {
-  //     navigate('/');
-  //   }, 5000);
+    const timeoutId = setTimeout(() => {
+      navigate('/');
+    }, 5000);
 
-  //   return () => {
-  //     clearInterval(intervalId);
-  //     clearTimeout(timeoutId);
-  //   };
-  // }, [navigate]);
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
+  }, [navigate]);
 
   return (
     <div className="flex items-center justify-center p-24">
