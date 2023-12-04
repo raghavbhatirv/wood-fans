@@ -13,7 +13,7 @@ function SelectPaymentOption() {
     name: "Narayan Das",
     email: "workmail.narayan@gmail.com",
     contact: "911234567890",
-    totalAmount: 1,
+    totalAmount: 21000,
   };
   const { name, email, contact, totalAmount } = orderDetails;
 

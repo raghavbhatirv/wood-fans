@@ -19,7 +19,7 @@ const Navbar = () => {
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
   const [authStatus, setAuthStatus] = useState(null);
-  let userName = [];
+  let userName = authStatus?.displayName?.split(" ");
   const isMounted = useRef(true);
   // const userId = auth?.currentUser?.uid;
   const { cartData } = useSelector((store) => store.cartReducer);
@@ -63,7 +63,7 @@ const Navbar = () => {
     setMobileMenuActive(false);
   };
   const handleVisitProfile = () => {
-    navigate("/user/profile")
+    navigate("/user/profile");
   };
 
   const toCartPage = () => {
@@ -131,7 +131,6 @@ const Navbar = () => {
                       <p
                         className=" font-medium text-sm cursor-pointer"
                         onClick={handleVisitProfile}
-
                       >
                         Hello, {userName[0]}
                       </p>
@@ -152,9 +151,9 @@ const Navbar = () => {
                         src={shoppingbag}
                       ></img>
                       {/* </Link> */}
-                      <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
+                      {/* <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
                         {cartValue}
-                      </p>
+                      </p> */}
                     </div>
                     <div className="lg:hidden">
                       {isMobileMenuActive ? (
