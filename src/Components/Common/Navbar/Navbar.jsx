@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
-import { fetchCartData } from "../../../Redux/Products/action";
+import { fetchCartData } from "../../../Redux/Products/action"
 import { useId } from "react";
 import { useCart } from "../../../Hooks/useCart ";
 
