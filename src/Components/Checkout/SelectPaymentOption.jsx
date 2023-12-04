@@ -8,6 +8,12 @@ function SelectPaymentOption() {
   const [Razorpay, isLoaded] = useRazorpay();
   const [showThankYou, setShowThankYou] = useState(false);
   const navigate = useNavigate();
+  let cartTotal = localStorage.getItem("cartTotal");
+  if (cartTotal) {
+    cartTotal = parseFloat(cartTotal);
+  } else {
+    console.log(cartTotal);
+  }
 
   const orderDetails = {
     name: "Narayan Das",
@@ -22,7 +28,7 @@ function SelectPaymentOption() {
       if (method === "Card / UPI") {
         const options = {
           key: "rzp_test_GEIAiRjjm2TKRH",
-          amount: Math.round(totalAmount) * 100,
+          amount: Math.round(cartTotal) * 100,
           currency: "INR",
           name: "WOOD FANS",
           description: "Test Transaction",
