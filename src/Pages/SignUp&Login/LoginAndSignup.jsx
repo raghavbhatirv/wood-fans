@@ -11,23 +11,57 @@ import Signup from "./Signup";
 import Login from "./Login";
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithFacebook, loginWithGoogle } from "../../Redux/Auth/action";
-import { ToastContainer, toast } from "react-toastify";
+import PopUpDialog from "../../Components/Common/PopUpDialog";
+import { greenTik, worngTik } from "../../assets/animation/animi";
 
 const LoginAndSignup = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const [showPopup, setShowPopup] = useState({
+    message: "",
+    icon: "",
+    show: false,
+  });
+
+
+  const [show, setShow] = useState(false)
+ 
+  const theme = useSelector((store) => store.themeReducer.theme);
   const dispatch = useDispatch();
 
-  const theme = useSelector((store) => store.themeReducer.theme);
+  const errorMessage = useSelector((store) => store.authReducer.errorMessage);
+  const successMessage = useSelector(
+    (store) => store.authReducer.successMessage
+  );
+
+  console.log(errorMessage,successMessage)
+  const handleSuccessMessage = () => {
+    setShowPopup({
+      message: successMessage,
+      lottie: "success",
+      show: true,
+    });
+  };
+  const handleErrorMessage = () => {
+    setShowPopup({
+      message: errorMessage,
+      lottie: "error",
+      show: true,
+    });
+  };
 
   const handleLoginAndSign = () => {
     setIsLogin((p) => !p);
   };
-
   const handleLoginWithGoogle = () => {
-    dispatch(loginWithGoogle());
+    dispatch(loginWithGoogle(handleErrorMessage, handleSuccessMessage));
+    handleTogglePopup();
   };
   const handleLoginWithFacebook = () => {
-    dispatch(loginWithFacebook());
+    dispatch(loginWithFacebook(handleErrorMessage, handleSuccessMessage));
+    handleTogglePopup();
+  };
+  const handleTogglePopup = () => {
+    setShow(!showPopup.show);
   };
 
   return (
@@ -83,6 +117,7 @@ const LoginAndSignup = () => {
           </h2>
         )}
       </div>
+      {show && <PopUpDialog showPopup={showPopup}/>}
     </div>
   );
 };

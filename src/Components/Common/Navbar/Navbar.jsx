@@ -3,48 +3,59 @@ import styles from "./Navbar.module.css";
 import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryChanged } from "../../../Redux/Products/action";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
+import { fetchCartData } from "../../../Redux/Products/action";
+import { useId } from "react";
 
 const Navbar = () => {
   const category = useSelector((store) => store.dataReducer);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
   const [authStatus, setAuthStatus] = useState(null);
   const userName = authStatus?.displayName?.split(" ");
   const isMounted = useRef(true);
+  // const userId = auth?.currentUser?.uid;
 
+  const { cartData } = useSelector((store) => store.cartReducer);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (isMounted.current) {
         setAuthStatus(user);
+        const userId = user?.uid;
+        if (userId) {
+          dispatch(fetchCartData(userId));
+        }
       }
     });
     return () => {
       isMounted.current = false;
       unsubscribe();
     };
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (cartData?.length > 0) {
+      setCartValue(cartData.length);
+    }
+  }, [cartData]);
 
   const toggleMobileMenu = () => {
     setMobileMenuActive(!isMobileMenuActive);
   };
-  const searchData = () => { };
+  const searchData = () => {};
   const toHome = () => {
     navigate("/");
   };
-  const mobileMenuLoginBtn = ()=>{
+  const mobileMenuLoginBtn = () => {
     navigate("/login");
-    setMobileMenuActive(false)
-  }
-  const categoryChangeInStore = (event, value) => {
-    dispatch(categoryChanged(value));
+    setMobileMenuActive(false);
   };
+
   return (
     <div>
       <div id={styles["navbar-id"]} className="max-sm:bg-gray-200 shadow">
@@ -99,15 +110,17 @@ const Navbar = () => {
                     </a>
                   </div>
                   <div className="max-sm:hidden">
-                    {authStatus ?
-                      <p className=" font-medium text-sm">Hello, {userName[0]}</p>
-                      :
+                    {authStatus ? (
+                      <p className=" font-medium text-sm">
+                        Hello, {userName[0]}
+                      </p>
+                    ) : (
                       <Link to="/login">
                         <p className="text-sm font-semibold max-sm:text-base">
                           Login/SignUp
                         </p>
                       </Link>
-                    }
+                    )}
                   </div>
                   <div className="flex items-center justify-between gap-5">
                     <div className="relative">
@@ -137,46 +150,27 @@ const Navbar = () => {
               <div className="flex justify-between items-center">
                 <div className=" max-lg:invisible">
                   <ul className="list-none flex">
-                    <Link
-                      onClick={(event) => categoryChangeInStore(event, "SOFAS")}
-                      to="/product"
-                    >
+                    <Link to="/products/SOFAS">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Sofa's
                       </li>
                     </Link>
-                    <Link
-                      onClick={(event) => categoryChangeInStore(event, "BEDS")}
-                      to="/product"
-                    >
+                    <Link to="/products/BEDS">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Beds
                       </li>
                     </Link>
-                    <Link
-                      onClick={(event) =>
-                        categoryChangeInStore(event, "CHILDREN'S FURNITURE")
-                      }
-                      to="/product"
-                    >
+                    <Link to="/products/CHILDREN'S FURNITURE">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Children furniture
                       </li>
                     </Link>
-                    <Link
-                      onClick={(event) =>
-                        categoryChangeInStore(event, "ARMCHAIRS AND POUFS")
-                      }
-                      to="/product"
-                    >
+                    <Link to="/products/ARMCHAIRS AND POUFS">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         ARMCHAIRS AND POUFS
                       </li>
                     </Link>
-                    <Link
-                      onClick={(event) => categoryChangeInStore(event, null)}
-                      to="/product"
-                    >
+                    <Link to="/products/all">
                       <li className="px-4 py-2 text-base uppercase hover:opacity-50">
                         Products
                       </li>
@@ -194,8 +188,9 @@ const Navbar = () => {
       </div>
       {/* Mobile Menu */}
       <div
-        className={`${isMobileMenuActive ? styles.mobileMenu_active : styles.mobile_menu
-          } hidden max-lg:block`}
+        className={`${
+          isMobileMenuActive ? styles.mobileMenu_active : styles.mobile_menu
+        } hidden max-lg:block`}
       >
         <div className="p-4">
           <div>
@@ -270,18 +265,18 @@ const Navbar = () => {
           <div></div>
           <div className="text-center py-2">
             <div className="pt-1 pb-6">
-              {authStatus ?
+              {authStatus ? (
                 <p className=" font-medium text-lg">Hello, {userName[0]}</p>
-                :
+              ) : (
                 <Link to="/login">
-                  <Button 
-                     text="Login/Signup"
-                     type="button"
-                     onClick={mobileMenuLoginBtn}
-                     className={` text-[16px] bg-dark text-white`}
+                  <Button
+                    text="Login/Signup"
+                    type="button"
+                    onClick={mobileMenuLoginBtn}
+                    className={` text-[16px] bg-dark text-white`}
                   />
                 </Link>
-              }
+              )}
             </div>
             <p className="font-bold text-lg text-white">+7 (926) 787-11-00</p>
             <p className="text-lg text-gray italic">Modern Furniture factory</p>

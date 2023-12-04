@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useRef } from "react";
 
-const DropDwonSelector = ({ data }) => {
+const DropDwonSelector = ({ data, text }) => {
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
+  const modalRef = useRef();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -12,7 +14,6 @@ const DropDwonSelector = ({ data }) => {
         setOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -32,7 +33,7 @@ const DropDwonSelector = ({ data }) => {
           ? selected?.length > 25
             ? selected?.substring(0, 25) + "..."
             : selected
-          : "Select Country"}
+          : text}
         <BiChevronDown size={20} className={`${open && "rotate-180"}`} />
       </div>
       <ul

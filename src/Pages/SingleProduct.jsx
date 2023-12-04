@@ -156,8 +156,8 @@ const SingleProduct = () => {
           {/* Filters */}
           <PopUpSelector />
           <div className="grid grid-cols-2 mt-5 gap-2 text-xs sm:text-base">
-            <DropDwonSelector data={sizeArray} />
-            <DropDwonSelector data={quantityArray} />
+            <DropDwonSelector data={sizeArray} text="Select Size" />
+            <DropDwonSelector data={quantityArray} text="Select Quantity" />
           </div>
 
           <div className="mt-5 text-xs md:text-base">

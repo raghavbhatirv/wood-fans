@@ -3,7 +3,15 @@ import Footer from "./Components/Common/Footer";
 import ProductPage from "./Components/ProductPage/ProductPage";
 import { AllRoutes } from "./Routes/AllRoutes";
 import { ToastContainer } from "react-toastify";
+import { addDoc, collection } from './Services/firebaseConfig'
+
+
 function App() {
+
+
+
+
+
   return (
     <div className="font-Poppins">
       <Navbar />

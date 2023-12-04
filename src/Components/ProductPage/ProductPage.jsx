@@ -21,7 +21,7 @@ const ProductPage = () => {
     if (category == null) {
       return productData;
     }
-    return product.category.toLowerCase() === category.toLowerCase();
+    return product?.category?.toLowerCase() === category?.toLowerCase();
   });
 
   const redirectToDetail = (id) => {
