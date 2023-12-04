@@ -77,7 +77,7 @@ Check out these snapshots showcasing Wood Fans on different devices.
 
 - User Profile Page
 <div>
-    <img src=""/>
+    <img src="./public/screenshots/userProfile.jpg"/>
 </div>
 
 
@@ -95,7 +95,8 @@ Check out these snapshots showcasing Wood Fans on different devices.
 
 - Cart Page
 <div>
-    <img src=""/>
+    <img src="./public/screenshots/cartEmpty.jpg"/>
+    <img src="./public/screenshots/cart.jpg"/>
 </div>
 
 
