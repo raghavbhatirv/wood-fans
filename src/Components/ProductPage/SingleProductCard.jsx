@@ -28,7 +28,6 @@ function SingleProductCard({ product, redirectToDetail }) {
   const changeWishListState = () => {
     setWishListClicked((pre) => !pre);
   };
-
   const handleAddToCart = (productId, userId) => {
     if (userId) {
       dispatch(addToCart(productId, userId));
