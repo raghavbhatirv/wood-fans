@@ -7,6 +7,7 @@ import ProductPage from "../Components/ProductPage/ProductPage";
 import { PrivateRoute } from "./PrivateRoute";
 import SingleProduct from "../Pages/SingleProduct";
 import UserProfile from "..//Pages/UserProfile";
+import Checkout from "../Pages/Checkout";
 const AllRoutes = () => {
   return (
     <Routes>
@@ -15,6 +16,7 @@ const AllRoutes = () => {
       <Route path="/products/:category" element={<ProductPage />}></Route>
       <Route path="/product/:id" element={<SingleProduct />}></Route>
       <Route path="/cart" element={<UserProfile />}></Route>
+      <Route path="/checkout" element={<Checkout />}></Route>
     </Routes>
   );
 };

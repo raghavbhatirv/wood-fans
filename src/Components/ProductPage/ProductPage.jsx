@@ -25,7 +25,6 @@ const ProductPage = () => {
   });
 
   const redirectToDetail = (id) => {
-    console.log(id);
     navigate(`/product/${id}`);
   };
 
