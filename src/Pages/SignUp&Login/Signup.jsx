@@ -65,6 +65,7 @@ const Signup = ({ onClick }) => {
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           error={"Password should be 6-15 characters and include at least 1 letter, 1 number, and 1 special character!"}
+          pattern="^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,15}$"
         />
         <InputFeild
           placeholder="Confirm Password"
@@ -73,7 +74,7 @@ const Signup = ({ onClick }) => {
           type="password"
           value={confirmpassword}
           error="Passwords don't match!"
-          // pattern={password}
+          pattern={password}
         />
 
         <Button
