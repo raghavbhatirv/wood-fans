@@ -137,9 +137,9 @@ const Navbar = () => {
                         src={shoppingbag}
                       ></img>
                       {/* </Link> */}
-                      <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
+                      {/* <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
                         {cartValue}
-                      </p>
+                      </p> */}
                     </div>
                     <div className="lg:hidden">
                       {isMobileMenuActive ? (

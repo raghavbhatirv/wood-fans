@@ -127,25 +127,38 @@ export const removeFromWishlist = (productId, userId) => async (dispatch) => {
 // moveFromCartToWishlist
 
 export const moveFromCartToWishlist = (productId, userId) => async (dispatch) => {
+    console.log("first");
     try {
         const userRef = doc(storeDB, 'users', userId);
-        const batch = writeBatch(storeDB);
+        const userSnapshot = await getDoc(userRef);
+        const userData = userSnapshot.data();
 
-        // Add to wishlist
-        batch.update(userRef, {
-            wishlist: arrayUnion(productId)
-        });
+        // Check if product exists in cart
+        const productInCart = userData.cart.find(item => item.productId === productId);
 
-        // Remove from cart
-        batch.update(userRef, {
-            cart: arrayRemove(productId)
-        });
+        if (productInCart) {
+            const batch = writeBatch(storeDB);
 
-        await batch.commit();
+            // Remove from cart
+            const newCart = userData.cart.filter(item => item.productId !== productId);
+            batch.update(userRef, { cart: newCart });
+
+            // Add to wishlist
+            batch.update(userRef, {
+                wishlist: arrayUnion(productId)
+            });
+
+            await batch.commit();
+            console.log("second");
+        } else {
+            console.log(`Product with id ${productId} not found in cart.`);
+        }
+
     } catch (error) {
         console.log(error);
     }
 };
+
 
 export const getCartDataRequest = () => ({ type: CART_GET_REQUEST });
 export const getCartDataSuccess = (data) => ({ type: CART_GET_SUCCESS, payload: data });
