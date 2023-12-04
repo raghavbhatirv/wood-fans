@@ -57,62 +57,62 @@ Discover our expertise in four primary categories:
 
 Check out these snapshots showcasing Wood Fans on different devices.
 
-- Home Page
+- # Home Page
 <div>
     <img src="./public/screenshots/homePage.png"/>
 </div>
 
 
-- Login Page
+- # Login Page
 <div>
     <img src="./public/screenshots/Login.png"/>
 </div>
 
 
-- Signup Page
+- # Signup Page
 <div>
     <img src="./public/screenshots/signup.png"/>
 </div>
 
 
-- User Profile Page
+- # User Profile Page
 <div>
     <img src="./public/screenshots/userProfile.jpg"/>
 </div>
 
 
-- Product Page
+- # Product Page
 <div>
     <img src="./public/screenshots/product.png"/>
 </div>
 
 
-- Product Detail Page
+- # Product Detail Page
 <div>
     <img src="./public/screenshots/productDetail.png"/>
 </div>
 
 
-- Cart Page
+- # Cart Page
 <div>
     <img src="./public/screenshots/cartEmpty.jpg"/>
     <img src="./public/screenshots/cart.jpg"/>
 </div>
 
 
-- Delivery Detail Page
+- # Delivery Detail Page
 <div>
     <img src=""/>
 </div>
 
 
-- Payment Page
+- # Payment Page
 <div>
     <img src=""/>
 </div>
 
 
-- Order Successful Page
+- # Order Successful Page
 <div>
     <img src="./public/screenshots/confirmation.png"/>
 </div>
