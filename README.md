@@ -61,33 +61,59 @@ Check out these snapshots showcasing Wood Fans on different devices.
 <div>
     <img src="./public/screenshots/homePage.png"/>
 </div>
+
+
 - Login Page
 <div>
-    <img src="./public/screenshots/homePage.png"/>
-</div>- ![Product Page](./public/screenshots/productPage.png)
+    <img src="./public/screenshots/Login.png"/>
+</div>
+
+
 - Signup Page
 <div>
+    <img src="./public/screenshots/signup.png"/>
+</div>
+
+
+- User Profile Page
+<div>
     <img src="./public/screenshots/homePage.png"/>
 </div>
+
+
 - Product Page
 <div>
-    <img src="./public/screenshots/homePage.png"/>
+    <img src="./public/screenshots/product.png"/>
 </div>
+
+
 - Product Detail Page
 <div>
-    <img src="./public/screenshots/homePage.png"/>
+    <img src="./public/screenshots/productDetail.png"/>
 </div>
+
+
 - Cart Page
 <div>
     <img src="./public/screenshots/homePage.png"/>
 </div>
+
+
 - Delivery Detail Page
 <div>
-    <img src="./public/screenshots/homePage.png"/>
+    <img src=""/>
 </div>
+
+
 - Payment Page
 <div>
-    <img src="./public/screenshots/homePage.png"/>
+    <img src=""/>
+</div>
+
+
+- Order Successful Page
+<div>
+    <img src="./public/screenshots/confirmation.png"/>
 </div>
 
 ## Contributors
