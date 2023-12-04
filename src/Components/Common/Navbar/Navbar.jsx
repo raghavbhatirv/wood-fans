@@ -62,6 +62,9 @@ const Navbar = () => {
     navigate("/login");
     setMobileMenuActive(false);
   };
+  const handleVisitProfile = () => {
+    navigate("/user/profile")
+  };
 
   return (
     <div>
@@ -103,7 +106,7 @@ const Navbar = () => {
                   </ul>
                 </div>
                 <div className="flex justify-between items-center gap-3.5">
-                  <div className="border border-solid border-gray-200 rounded-md max-xl:hidden p-1.5 bg-white flex items-center">
+                  {/* <div className="border border-solid border-gray-200 rounded-md max-xl:hidden p-1.5 bg-white flex items-center">
                     <input
                       onChange={(e) => {
                         setSearch(e.target.value);
@@ -117,10 +120,15 @@ const Navbar = () => {
                       <i className="fa-solid fa-magnifying-glass"></i>
                     </a>
                     
-                  </div>
+                  </div> */}
+
                   <div className="max-sm:hidden">
                     {authStatus ? (
-                      <p className=" font-medium text-sm">
+                      <p
+                        className=" font-medium text-sm cursor-pointer"
+                        onClick={handleVisitProfile}
+
+                      >
                         Hello, {userName[0]}
                       </p>
                     ) : (
