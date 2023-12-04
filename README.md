@@ -102,13 +102,14 @@ Check out these snapshots showcasing Wood Fans on different devices.
 
 - # Delivery Detail Page
 <div>
-    <img src=""/>
+    <img src="./public/screenshots/checkout.png"/>
 </div>
 
 
 - # Payment Page
 <div>
-    <img src=""/>
+    <img src="./public/screenshots/payment.png"/>
+    <img src="./public/screenshots/payment2.png"/>
 </div>
 
 
