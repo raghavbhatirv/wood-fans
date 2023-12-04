@@ -12,7 +12,7 @@ const cart = () => {
     const { cartData } = cartDetails;
     console.log(cartData)
     const [cartitemsCount, setCartitemsCount] = useState(0);
-    const [cartEmpty, setCartEmpty] = useState(false);
+    const [cartEmpty, setCartEmpty] = useState(true);
 
     const [discount, setDiscount] = useState(0.00);
     const [subtotalValue, setSubtotalValue] = useState(0);
@@ -35,11 +35,7 @@ const cart = () => {
             setCartEmpty(true);
             setCartitemsCount(0);
         }
-    
-        return () => {
-            unsubscribeAuth();
-        };
-    }, []);
+    }, [cartData]);
     
 
     const onClickEvent = (action, id)=>{

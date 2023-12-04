@@ -2,51 +2,53 @@ import { useEffect, useState } from "react";
 import Button from "./Common/Button";
 import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
 
-const Cartitem = ({Productid}) => {
+const Cartitem = ({ Productid }) => {
     const [cartItemData, setCartItemData] = useState({});
-    console.log(Productid);
+    const [mainImg, setMainImg] = useState([]);
     useEffect(() => {
         const fetchProductData = async () => {
-          try {
-            const productDocRef = doc(storeDB, "products", Productid);
-            const productDocSnapshot = await getDoc(productDocRef);
-            if (productDocSnapshot.exists()) {
-                console.log(productDocSnapshot.data())
-                setCartItemData({ id: Productid, ...productDocSnapshot.data()});
-            } else {
-              console.log("No such document!");
+            try {
+                const productDocRef = doc(storeDB, "products", Productid);
+                const productDocSnapshot = await getDoc(productDocRef);
+                if (productDocSnapshot.exists()) {
+                    console.log(productDocSnapshot.data())
+                    setMainImg(productDocSnapshot.data().images);
+                    setCartItemData({ id: Productid, ...productDocSnapshot.data() });
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.error("Error fetching product data:", error);
             }
-          } catch (error) {
-            console.error("Error fetching product data:", error);
-          }
         };
 
         fetchProductData();
-      }, [Productid]);
-      console.log(cartItemData);
-    // const [originalprice, setOriginal] = useState(0);
-    // const [discount, setDiscount] = useState(0);
-    // const [quantity, setQuantity] = useState(1);
+    }, [Productid]);
+    const { category, color, id, images, name, price, stock } = cartItemData;
+    const [originalprice, setOriginal] = useState(0);
+    const [discount, setDiscount] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 
-    // const generateStrikethroughPrice = (price) => {
-    //     const discountPercentage = Math.floor(Math.random() * (50 - 40 + 1) + 40);
-    //     setDiscount(discountPercentage)
-    //     const discountedPrice = price *1.5;
-    //     setOriginal(discountedPrice);
-    // }
-    // useEffect(() => {
-    //     generateStrikethroughPrice(price);
-    // }, [])
+    const generateStrikethroughPrice = (price) => {
+        const discountPercentage = Math.floor(Math.random() * (50 - 40 + 1) + 40);
+        setDiscount(discountPercentage)
+        const discountedPrice = price * 1.5;
+        setOriginal(discountedPrice);
+    }
+    useEffect(() => {
+        generateStrikethroughPrice(price);
+    }, []);
+
     return (
         <div className="bg-gray-100 rounded-lg my-2 p-2">
-            {/* <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center">
                 <div className="flex W-5/12 items-center">
                     <div className="w-32">
-                        <img className="object-cover max-w-full max-h-full " src={image}></img>
+                        <img className="object-cover max-w-full max-h-full " src={mainImg[0]}></img>
                     </div>
                     <div className="px-2">
-                        <p className="font-semibold text-xl">{title}</p>
-                        <p className="font-normal text-sm opacity-60">{color}</p>
+                        <p className="font-semibold text-xl">{name}</p>
+                        <p className="font-normal text-sm opacity-60">{category}</p>
                         <div className="flex gap-2 py-5">
                             <button onClick={() => { btnonClick("Remove", id) }} className="text-xs bg-primary-yellow p-1 rounded-sm cursor-pointer hover:text-white">Remove From Cart</button>
                             <button onClick={() => { btnonClick("Wishlist", id) }} className="text-xs bg-primary-yellow p-1 rounded-sm text-white cursor-pointer hover:text-black">Move To WishList</button>
@@ -65,7 +67,7 @@ const Cartitem = ({Productid}) => {
                     <h2 className="opacity-50 line-through">{originalprice}₹</h2>
                     <h2 className="text-green-500">{discount}%</h2>
                 </div>
-            </div> */}
+            </div>
         </div>
     )
 }

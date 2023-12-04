@@ -6,9 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
-import { fetchCartData } from "../../../Redux/Products/action"
+import { fetchCartData } from "../../../Redux/Products/action";
 import { useId } from "react";
-import { useCart } from "../../../Hooks/useCart ";
 
 const Navbar = () => {
   const category = useSelector((store) => store.dataReducer);
@@ -21,8 +20,7 @@ const Navbar = () => {
   const userName = authStatus?.displayName?.split(" ");
   const isMounted = useRef(true);
   // const userId = auth?.currentUser?.uid;
-
-  // const { cartData } = useSelector((store) => store.cartReducer);
+  const { cartData } = useSelector((store) => store.cartReducer);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (isMounted.current) {
@@ -39,7 +37,8 @@ const Navbar = () => {
     };
   }, [dispatch]);
   const userId = auth?.currentUser?.uid;
-  const cartData = useCart(userId);
+  // const cartData = useCart(userId);
+  // console.log(cartData);
 
   useEffect(() => {
     if (cartData?.length > 0) {
