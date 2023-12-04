@@ -49,7 +49,7 @@ Discover our expertise in four primary categories:
 - **Fetching:** Axios
 - **Routing:** React-router-dom
 - **Authentication:** Firebase
-- **Database:** Firebase Realtime Database
+- **Database:** Firestore Database
 - **Payment:** RazorPay
 - **Deployment:** Vercel
 
