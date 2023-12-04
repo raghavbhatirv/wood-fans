@@ -8,6 +8,7 @@ import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
 import { fetchCartData } from "../../../Redux/Products/action";
 import { useId } from "react";
+import { useCart } from "../../../Hooks/useCart ";
 
 const Navbar = () => {
   const category = useSelector((store) => store.dataReducer);
@@ -21,7 +22,7 @@ const Navbar = () => {
   const isMounted = useRef(true);
   // const userId = auth?.currentUser?.uid;
 
-  const { cartData } = useSelector((store) => store.cartReducer);
+  // const { cartData } = useSelector((store) => store.cartReducer);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (isMounted.current) {
@@ -37,6 +38,8 @@ const Navbar = () => {
       unsubscribe();
     };
   }, [dispatch]);
+  const userId = auth?.currentUser?.uid;
+  const cartData = useCart(userId);
 
   useEffect(() => {
     if (cartData?.length > 0) {
