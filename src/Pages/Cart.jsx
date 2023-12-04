@@ -35,6 +35,7 @@ const cart = () => {
 
   const updateQuantity = (quantity) => {
     setSubtotalValue(originalPrice * quantity);
+    setCartTotal(originalPrice * quantity);
   };
 
   const [cart, setCart] = useState(cartData);
