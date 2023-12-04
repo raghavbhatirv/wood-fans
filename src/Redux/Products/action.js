@@ -21,8 +21,7 @@ export const fetchData = () => async (dispatch) => {
     }
 };
 
-
-
+// Do not use in cart page.
 export const addToCart = (productId, userId) => async (dispatch) => {
     try {
         const userRef = doc(storeDB, 'users', userId);
@@ -45,7 +44,7 @@ export const addToCart = (productId, userId) => async (dispatch) => {
 };
 
 
-
+// Do not use in cart page.
 export const addToWishlist = (productId, userId) => async (dispatch) => {
     try {
         const userRef = doc(storeDB, 'users', userId);
@@ -57,6 +56,63 @@ export const addToWishlist = (productId, userId) => async (dispatch) => {
     }
 };
 
+// moveFromWishlistToCart
+export const moveFromWishlistToCart = (productId, userId) => async (dispatch) => {
+    try {
+        const userRef = doc(storeDB, 'users', userId);
+        const batch = writeBatch(storeDB);
+
+        // Add to cart
+        batch.update(userRef, {
+            cart: arrayUnion({ productId, quantity: 1 })
+        });
+
+        // Remove from wishlist
+        batch.update(userRef, {
+            wishlist: arrayRemove(productId)
+        });
+
+        await batch.commit();
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
+export const increaseQuantityInCart = (productId, userId) => async (dispatch) => {
+    try {
+        const userRef = doc(storeDB, 'users', userId);
+        const userSnapshot = await getDoc(userRef);
+        const userData = userSnapshot.data();
+        const cart = userData.cart.map(item =>
+            item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item
+        );
+
+        await updateDoc(userRef, { cart });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const decreaseQuantityInCart = (productId, userId) => async (dispatch) => {
+    try {
+        const userRef = doc(storeDB, 'users', userId);
+        const userSnapshot = await getDoc(userRef);
+        const userData = userSnapshot.data();
+        const cart = userData.cart.map(item =>
+            item.productId === productId ? { ...item, quantity: Math.max(0, item.quantity - 1) } : item
+        );
+
+        await updateDoc(userRef, { cart });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
+
+
+// Use in cart page
 export const removeFromWishlist = (productId, userId) => async (dispatch) => {
     try {
         const userRef = doc(storeDB, 'users', userId);
@@ -67,6 +123,30 @@ export const removeFromWishlist = (productId, userId) => async (dispatch) => {
         console.log(error);
     }
 };
+
+// moveFromCartToWishlist
+
+export const moveFromCartToWishlist = (productId, userId) => async (dispatch) => {
+    try {
+        const userRef = doc(storeDB, 'users', userId);
+        const batch = writeBatch(storeDB);
+
+        // Add to wishlist
+        batch.update(userRef, {
+            wishlist: arrayUnion(productId)
+        });
+
+        // Remove from cart
+        batch.update(userRef, {
+            cart: arrayRemove(productId)
+        });
+
+        await batch.commit();
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 
 
 
