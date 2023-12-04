@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "../../Redux/Products/Action";
+import { fetchData } from "../../Redux/Products/action";
 import SingleProductCard from "./SingleProductCard";
 import { filterByCategoryAndNameLength } from "./common";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ function RandomProducts({ selected }) {
   const navigate = useNavigate();
   const [currentProducts, setCurrentProducts] = useState([]);
   const { productData, loading } = useSelector((store) => store.dataReducer);
-
   const redirectToDetail = (id) => {
     navigate(`product/${id}`);
   };

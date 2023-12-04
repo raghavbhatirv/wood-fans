@@ -5,7 +5,7 @@ export function filterByCategoryAndNameLength(category, setCurrentProducts, prod
 
     const filteredData = productData.filter(
         (item) =>
-            item.category.toLowerCase() === category.toLowerCase() &&
+            item?.category?.toLowerCase() === category?.toLowerCase() &&
             item.name.length <= 20
     );
 

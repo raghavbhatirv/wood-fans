@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "../../Redux/Products/Action";
+import { fetchData } from "../../Redux/Products/action";
 import load from "./loading.gif";
 import SingleProductCard from "./SingleProductCard";
 import ProductSkeleton from "./ProductSkeleton";
@@ -21,7 +21,7 @@ const ProductPage = () => {
     if (category == "all") {
       return productData;
     }
-    return product.category.toLowerCase() === category.toLowerCase();
+    return product?.category?.toLowerCase() === category?.toLowerCase();
   });
 
   const redirectToDetail = (id) => {
