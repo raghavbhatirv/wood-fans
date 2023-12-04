@@ -57,7 +57,7 @@ Discover our expertise in four primary categories:
 
 Check out these snapshots showcasing Wood Fans on different devices.
 
-- ![Home Page](./public/screenshots/homepage.png)
+- ![Home Page](./public/screenshots/homePage.png)
 - ![Login](./public/screenshots/login.png)
 - ![Product Page](./public/screenshots/productPage.png)
 - ![Product Details](./public/screenshots/productDetails.png)
