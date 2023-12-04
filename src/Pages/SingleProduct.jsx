@@ -24,12 +24,13 @@ import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
 import { useState } from "react";
 import PopupMessage from "../Components/Common/PopupMessage";
 import { useDispatch } from "react-redux";
-import { addToCart, fetchCartData } from "../Redux/Products/Action";
+import { addToCart, fetchCartData } from "../Redux/Products/action";
 const sizeArray = ["Big", "Average", "Small"];
 const quantityArray = [1, 2, 3, 4];
 
 const SingleProduct = () => {
   const { id } = useParams();
+
   const userId = auth?.currentUser?.uid;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,10 +62,12 @@ const SingleProduct = () => {
       try {
         const productDocRef = doc(storeDB, "products", productId);
         const productDocSnapshot = await getDoc(productDocRef);
+        
         if (productDocSnapshot.exists()) {
-          setProductData({ id: productId, ...productDocSnapshot.data() });
+          setProductData({ id: productId, ...productDocSnapshot.data()});
           setImage(productDocSnapshot.data().images);
           setMainImage(productDocSnapshot.data().images[0]);
+         
         } else {
           console.log("No such document!");
         }
@@ -75,11 +78,6 @@ const SingleProduct = () => {
 
     fetchProductData();
   }, [productId]);
-
-  // const actualPrice = getRandomPrice(
-  //   (productData?.price * 3) / 2,
-  //   productData?.price
-  // );
 
   const handleImageChange = (img) => {
     setMainImage(img);
