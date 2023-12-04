@@ -1,4 +1,4 @@
-import { DATA_GET_REQUEST, DATA_GET_SUCCESS, DATA_GET_FAILURE, CATEGORY_UPDATE } from "./actionTypes";
+import { DATA_GET_REQUEST, DATA_GET_SUCCESS, DATA_GET_FAILURE } from "./actionTypes";
 
 const initialState = {
     productData: [],
@@ -15,8 +15,6 @@ export const dataReducer = (state = initialState, action) => {
             return { ...state, loading: false, productData: action.payload };
         case DATA_GET_FAILURE:
             return { ...state, loading: false, error: action.payload };
-        case CATEGORY_UPDATE:
-            return { ...state, category: action.payload };
         default:
             return state;
     }

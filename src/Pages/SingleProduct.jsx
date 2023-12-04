@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import IconButton from "../Components/Common/IconButton";
 import {
   faCartShopping,
@@ -20,20 +20,41 @@ import ImageColumn from "../Components/Common/ImageColumn";
 import ClientsReviews from "../Components/Common/ClientsReviews";
 import RandomProducts from "../Components/Common/RandomProducts";
 import { useEffect } from "react";
-import { storeDB, getDoc } from "../Services/firebaseConfig";
-import { doc } from "firebase/firestore";
+import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
 import { useState } from "react";
-
+import PopupMessage from "../Components/Common/PopupMessage";
+import { useDispatch } from "react-redux";
+import { addToCart, fetchCartData } from "../Redux/Products/Action";
 const sizeArray = ["Big", "Average", "Small"];
 const quantityArray = [1, 2, 3, 4];
 
 const SingleProduct = () => {
   const { id } = useParams();
-
+  const userId = auth?.currentUser?.uid;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
   const [productData, setProductData] = useState({});
   const [image, setImage] = useState([]);
   const [mainImage, setMainImage] = useState(image[0]);
   const productId = id;
+
+  const handleAddToCart = (productId, userId, buttonType) => {
+    if (userId) {
+      if (buttonType === "add to cart") {
+        dispatch(addToCart(productId, userId));
+        dispatch(fetchCartData(userId));
+        setShowPopup(true);
+        setTimeout(() => setShowPopup(false), 1000);
+      } else {
+        dispatch(addToCart(productId, userId));
+        dispatch(fetchCartData(userId));
+        navigate("/cart");
+      }
+    } else {
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -66,6 +87,7 @@ const SingleProduct = () => {
 
   return (
     <div>
+      {showPopup && <PopupMessage message={"Product added to cart!"} />}
       <div className={`grid grid-cols-1 lg:grid-cols-2 gap-5 p-3 md:p-5`}>
         <div className="flex flex-col gap-5 lg:sticky top-4 w-auto h-min p-2">
           <div className="flex flex-col md:flex-row gap-2">
@@ -88,16 +110,28 @@ const SingleProduct = () => {
               <img src={mainImage} className="h-[80%]" />
 
               <div className="grid grid-cols-2 gap-4 justify-center">
-                <IconButton
-                  icon={faCartShopping}
-                  text="Add To Cart"
-                  className="bg-primary-yellow hover:border-primary-yellow hover:text-primary-yellow"
-                />
-                <IconButton
-                  icon={faBolt}
-                  text="Buy Now"
-                  className="bg-gray-600 hover:border-gray-600 hover:text-gray-600"
-                />
+                <div
+                  onClick={() =>
+                    handleAddToCart(productId, userId, "add to cart")
+                  }
+                  className="hover:cursor-pointer"
+                >
+                  <IconButton
+                    icon={faCartShopping}
+                    text="Add To Cart"
+                    className="bg-primary-yellow hover:border-primary-yellow hover:text-primary-yellow"
+                  />
+                </div>
+                <div
+                  onClick={() => handleAddToCart(productId, userId, "buy now")}
+                  className="hover:cursor-pointer"
+                >
+                  <IconButton
+                    icon={faBolt}
+                    text="Buy Now"
+                    className="bg-gray-600 hover:border-gray-600 hover:text-gray-600"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -162,10 +196,10 @@ const SingleProduct = () => {
           </div>
 
           <div className="mt-5 text-xs md:text-base">
-            <p className="text-justify">
-              <h3 className="font-bold text-lg pb-1">Description</h3>
+            <div className="text-justify">
+              <p className="font-bold text-lg pb-1">Description</p>
               {productData?.description?.short}
-            </p>
+            </div>
             <p className="text-justify mt-5">
               {productData?.description?.long}
             </p>
