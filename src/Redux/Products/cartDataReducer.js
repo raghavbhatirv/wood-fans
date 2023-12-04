@@ -1,7 +1,7 @@
 import { CART_GET_REQUEST, CART_GET_SUCCESS, CART_GET_FAILURE } from "./actionTypes";
 
 const initialState = {
-    cartData: [],
+    cartData: [1,2],
     loading: false,
     error: null,
 };
