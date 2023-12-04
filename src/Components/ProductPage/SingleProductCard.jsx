@@ -11,7 +11,7 @@ import {
   fetchCartData,
   fetchWishlistData,
   removeFromWishlist,
-} from "../../Redux/Products/Action";
+} from "../../Redux/Products/action";
 import PopupMessage from "../Common/PopupMessage";
 import { useEffect } from "react";
 function SingleProductCard({ product, redirectToDetail }) {

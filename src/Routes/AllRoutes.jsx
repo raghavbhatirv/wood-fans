@@ -9,6 +9,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import SingleProduct from "../Pages/SingleProduct";
 import UserProfile from "..//Pages/UserProfile";
 import OrderConfirmation from "../Components/OrderConfirmation";
+import Checkout from "../Pages/Checkout";
 
 const AllRoutes = () => {
   return (
@@ -19,6 +20,8 @@ const AllRoutes = () => {
       <Route path="/product/:id" element={<SingleProduct />}></Route>
       <Route path="/cart" element={<Cart />}></Route>
       <Route path="/success" element={<OrderConfirmation />}></Route>
+      <Route path="/user/profile" element={<UserProfile />}></Route>
+      <Route path="/checkout" element={<Checkout />}></Route>
     </Routes>
   );
 };
