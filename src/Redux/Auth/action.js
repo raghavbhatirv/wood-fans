@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPass
 import { collection, setDoc, doc, getDocs, getDoc } from 'firebase/firestore'
 import { FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from './actionType'
 import axios from 'axios'
+import {greenTik,worngTik} from '../../assets/animation/animi'
 
 // Login Action Methods
 const loginRequest = () => {
@@ -32,11 +33,12 @@ const signUpFailure = (payload) => {
 // Methods that tolk to Firebase
 
 // login with email and password 
-const loginWithEmailAndPassword = (email, password) => async (dispatch) => {
+const loginWithEmailAndPassword = (email, password, onSuccess) => async (dispatch) => {
      try {
           dispatch(loginRequest())
           await signInWithEmailAndPassword(auth, email, password);
           dispatch(loginSuccess("Login successful."))
+          onSuccess()
      } catch (error) {
           let errorMessage = "Login failed. Please check your credentials and try again.";
 
@@ -61,7 +63,7 @@ const loginWithEmailAndPassword = (email, password) => async (dispatch) => {
 //           dispatch(loginFailure(`Sign-In Error: ${error.message}`))
 //      }
 // }
-const loginWithGoogle = () => async (dispatch) => {
+const loginWithGoogle = (onFailure, onSuccess) => async (dispatch) => {
      try {
           dispatch(signUpRequest());
 
@@ -87,17 +89,19 @@ const loginWithGoogle = () => async (dispatch) => {
                });
           }
           dispatch(signUpSuccess(`Welcome, ${result.user.displayName}!`));
+          onSuccess()
      } catch (error) {
           let errorMessage = "Sign-up failed. Please check your information and try again";
           if (error.code === "auth/email-already-in-use") {
                errorMessage = "The email address is already in use by another account. Please use a different email";
           }
           dispatch(signUpFailure(errorMessage));
+          onFailure()
      }
 };
 
 // login with Facebook
-const loginWithFacebook = () => async () => {
+const loginWithFacebook = (onFailure, onSuccess) => async (dispatch) => {
      try {
           dispatch(loginRequest());
           const result = await signInWithPopup(auth, facebookProvider)
@@ -117,9 +121,6 @@ const signUpNewUser = (email, password, name) => async (dispatch) => {
           const userId = userCredential.user.uid;
 
           const userDocRef = doc(storeDB, 'users', userId);
-
-
-
           await setDoc(userDocRef, {
                name,
                email,
@@ -128,9 +129,6 @@ const signUpNewUser = (email, password, name) => async (dispatch) => {
                wishlist: [],
                order: [],
           });
-
-
-
           const data = collection(storeDB, "users");
           const querySnapshot = await getDoc(data);
 

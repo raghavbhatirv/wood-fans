@@ -188,6 +188,7 @@ const SingleProduct = () => {
           {/* Filters */}
           <PopUpSelector />
           <div className="grid grid-cols-2 mt-5 gap-2 text-xs sm:text-base">
+
             <DropDwonSelector data={sizeArray} purpose={"Select Size"} />
             <DropDwonSelector
               data={quantityArray}

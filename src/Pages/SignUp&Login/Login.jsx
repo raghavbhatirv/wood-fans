@@ -6,15 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginWithEmailAndPassword } from "../../Redux/Auth/action";
 import { toast } from "react-toastify";
 import { stringify } from "postcss";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ onClick }) => {
   const theme = useSelector((store) => store.themeReducer.theme);
 
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+
+  const navigate = useNavigate();
 
   const errorMessage = useSelector((store) => store.authReducer.errorMessage);
   const successMessage = useSelector(
@@ -27,10 +29,15 @@ const Login = ({ onClick }) => {
   if (errorMessage) {
     toast.error(errorMessage);
   }
+  const redirectToHome = () => {
+    navigate("/");
+  };
 
+  const handleTogglePopup = () => {};
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginWithEmailAndPassword(email, password));
+    handleTogglePopup();
+    dispatch(loginWithEmailAndPassword(email, password, redirectToHome));
 
     // RememberMe functionalites
     /*
@@ -55,12 +62,16 @@ const Login = ({ onClick }) => {
           icon={faEnvelope}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
+          error={"It should be a valid email address!"}
+          value={email}
         />
         <InputFeild
           placeholder="Password"
           icon={faLock}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
+          error={"Passwords don't match!"}
+          value={password}
         />
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">

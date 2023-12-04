@@ -3,17 +3,18 @@ import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useRef } from "react";
 
+
 const DropDwonSelector = ({ data, purpose }) => {
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
   const modalRef = useRef();
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         setOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -33,6 +34,7 @@ const DropDwonSelector = ({ data, purpose }) => {
           ? selected?.length > 25
             ? selected?.substring(0, 25) + "..."
             : selected
+
           : `${purpose}`}
         <BiChevronDown size={20} className={`${open && "rotate-180"}`} />
       </div>

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 const Signup = ({ onClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirPassword] = useState("");
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
@@ -45,18 +46,34 @@ const Signup = ({ onClick }) => {
           icon={faUser}
           onChange={(e) => setName(e.target.value)}
           type="text"
+          value={name}
+          error="Name and shouldn't include any special character!"
+          pattern="^[A-Za-z0-9]{3,16}$"
         />
         <InputFeild
           placeholder="Email"
           icon={faEnvelope}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
+          value={email}
+          error="It should be a valid email address!"
         />
         <InputFeild
           placeholder="Password"
           icon={faLock}
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
+          error={"Password should be 6-15 characters and include at least 1 letter, 1 number, and 1 special character!"}
+        />
+        <InputFeild
+          placeholder="Confirm Password"
+          icon={faLock}
+          onChange={(e) => setConfirPassword(e.target.value)}
+          type="password"
+          value={confirmpassword}
+          error="Passwords don't match!"
+          // pattern={password}
         />
 
         <Button
