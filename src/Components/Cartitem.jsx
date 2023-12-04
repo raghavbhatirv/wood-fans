@@ -40,8 +40,10 @@ const Cartitem = ({ Productid, btnonClick }) => {
     setOriginal(discountedPrice);
   };
   useEffect(() => {
-    generateStrikethroughPrice(price);
+    const priceNumber = parseFloat(price);
+    generateStrikethroughPrice(priceNumber);
   }, []);
+
   //   console.log(cartItemData);
 
   //   const btnonClick = (action) => {
@@ -115,9 +117,9 @@ const Cartitem = ({ Productid, btnonClick }) => {
           </div>
         </div>
         <div className="text-right">
-          <h2 className="font-semibold">{price}₹</h2>
-          <h2 className="opacity-50 line-through">{originalprice}₹</h2>
-          <h2 className="text-green-500">{discount}%</h2>
+          <h2 className="font-semibold">₹ {price}</h2>
+          <h2 className="opacity-50 line-through">₹60000</h2>
+          <h2 className="text-green-500">50%</h2>
         </div>
       </div>
     </div>

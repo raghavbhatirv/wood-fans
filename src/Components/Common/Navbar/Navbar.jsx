@@ -63,7 +63,7 @@ const Navbar = () => {
     setMobileMenuActive(false);
   };
   const handleVisitProfile = () => {
-    navigate("/user/profile")
+    navigate("/user/profile");
   };
 
   const toCartPage = () => {
@@ -131,7 +131,6 @@ const Navbar = () => {
                       <p
                         className=" font-medium text-sm cursor-pointer"
                         onClick={handleVisitProfile}
-
                       >
                         Hello, {userName[0]}
                       </p>

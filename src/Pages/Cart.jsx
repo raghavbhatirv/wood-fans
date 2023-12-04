@@ -15,6 +15,7 @@ import {
 // } from "../Services/firebaseConfig";
 import Cartitem from "../Components/Cartitem";
 import { useDebugValue } from "react";
+import { useNavigate } from "react-router-dom";
 
 const cart = () => {
   const cartDetails = useSelector((store) => store.cartReducer);
@@ -26,16 +27,18 @@ const cart = () => {
   const [cartEmpty, setCartEmpty] = useState(true);
 
   const [discount, setDiscount] = useState(0.0);
-  const [subtotalValue, setSubtotalValue] = useState(0);
-  const [cartTotal, setCartTotal] = useState(0);
+  const [subtotalValue, setSubtotalValue] = useState(30000);
+  const [cartTotal, setCartTotal] = useState(30000);
   const [coupon, setCoupon] = useState("");
   const [message, setMessage] = useState("");
 
   const [cart, setCart] = useState(cartData);
-
+  const navigate = useNavigate();
   const handleCouponChange = () => {
     if (coupon.toUpperCase() === "TEAM3") {
       setMessage({ text: "You got 30% off!", color: "text-green-600" });
+      setDiscount(9000);
+      setCartTotal(21000);
     } else {
       setMessage({ text: "Invalid coupon.", color: "text-red-600" });
     }
@@ -64,6 +67,9 @@ const cart = () => {
     }
   };
 
+  const toCheckout = () => {
+    navigate("/checkout");
+  };
   //   const getCartData = async (userId) => {
   //     try {
   //       const userRef = doc(storeDB, "users", userId);
@@ -138,10 +144,10 @@ const cart = () => {
                   </div>
                   <div className="text-right">
                     <h2 className="text-black font-semibold text-base">
-                      {subtotalValue}rs
+                      Rs. {subtotalValue}
                     </h2>
                     <h2 className="text-black font-semibold text-base pt-1">
-                      {discount}rs
+                      Rs. {discount}
                     </h2>
                   </div>
                 </div>
@@ -176,13 +182,16 @@ const cart = () => {
                     </div>
                     <div className="text-right">
                       <h1 className="text-black uppercase font-semibold text-lg">
-                        {cartTotal}
+                        Rs. {cartTotal}
                       </h1>
                     </div>
                   </div>
                 </div>
                 <div className="py-4 border-b-2 border-gray-100">
-                  <button className="py-1.5 w-full bg-primary-yellow hover:bg-white hover:border-2 hover:border-primary-yellow text-white hover:text-black font-semibold">
+                  <button
+                    className="py-1.5 w-full bg-primary-yellow hover:bg-white hover:border-2 hover:border-primary-yellow text-white hover:text-black font-semibold"
+                    onClick={toCheckout}
+                  >
                     Procced To Checkout
                   </button>
                 </div>
