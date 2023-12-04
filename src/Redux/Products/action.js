@@ -147,9 +147,6 @@ export const moveFromCartToWishlist = (productId, userId) => async (dispatch) =>
     }
 };
 
-
-
-
 export const getCartDataRequest = () => ({ type: CART_GET_REQUEST });
 export const getCartDataSuccess = (data) => ({ type: CART_GET_SUCCESS, payload: data });
 export const getCartDataFailure = (error) => ({ type: CART_GET_FAILURE, payload: error });
