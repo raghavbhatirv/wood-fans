@@ -63,7 +63,7 @@ const loginWithEmailAndPassword = (email, password, onSuccess) => async (dispatc
 //           dispatch(loginFailure(`Sign-In Error: ${error.message}`))
 //      }
 // }
-const loginWithGoogle = (onFailure, onSuccess) => async (dispatch) => {
+const loginWithGoogle = (onRedirect) => async (dispatch) => {
      try {
           dispatch(signUpRequest());
 
@@ -89,25 +89,26 @@ const loginWithGoogle = (onFailure, onSuccess) => async (dispatch) => {
                });
           }
           dispatch(signUpSuccess(`Welcome, ${result.user.displayName}!`));
-          onSuccess()
+          onRedirect()
+     
      } catch (error) {
           let errorMessage = "Sign-up failed. Please check your information and try again";
           if (error.code === "auth/email-already-in-use") {
                errorMessage = "The email address is already in use by another account. Please use a different email";
           }
           dispatch(signUpFailure(errorMessage));
-          onFailure()
+      
      }
 };
 
 // login with Facebook
-const loginWithFacebook = (onFailure, onSuccess) => async (dispatch) => {
+const loginWithFacebook = (onRedirect) => async (dispatch) => {
      try {
           dispatch(loginRequest());
           const result = await signInWithPopup(auth, facebookProvider)
 
           dispatch(loginSuccess(`Welcome, ${result.user.displayName}!`))
-
+          onRedirect()
      } catch (error) {
           dispatch(loginFailure(`Sign-In Error: ${error.message}`))
      }

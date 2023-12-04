@@ -8,6 +8,8 @@ import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
 import { fetchCartData } from "../../../Redux/Products/action";
 import { useId } from "react";
+import { BiChevronDown } from "react-icons/bi";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Navbar = () => {
   const category = useSelector((store) => store.dataReducer);
@@ -17,18 +19,21 @@ const Navbar = () => {
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
   const [authStatus, setAuthStatus] = useState(null);
-  const userName = authStatus?.displayName?.split(" ");
+  let userName = [];
   const isMounted = useRef(true);
   // const userId = auth?.currentUser?.uid;
   const { cartData } = useSelector((store) => store.cartReducer);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (isMounted.current) {
-        setAuthStatus(user);
-        const userId = user?.uid;
-        if (userId) {
-          dispatch(fetchCartData(userId));
+      if (user) {
+        if (isMounted.current) {
+          setAuthStatus(user);
+          const userId = user?.uid;
+          if (userId) {
+            dispatch(fetchCartData(userId));
+          }
         }
+        userName = user?.displayName?.split(" ");
       }
     });
     return () => {
@@ -104,12 +109,14 @@ const Navbar = () => {
                         setSearch(e.target.value);
                       }}
                       className="w-40 focus:outline-none rounded-md text-xs"
-                      type="text "
+                      type="text"
                       placeholder="Search product"
-                    ></input>
+                    />
+
                     <a onClick={searchData} href="#">
                       <i className="fa-solid fa-magnifying-glass"></i>
                     </a>
+                    
                   </div>
                   <div className="max-sm:hidden">
                     {authStatus ? (

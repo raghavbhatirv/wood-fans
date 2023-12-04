@@ -13,57 +13,60 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginWithFacebook, loginWithGoogle } from "../../Redux/Auth/action";
 import PopUpDialog from "../../Components/Common/PopUpDialog";
 import { greenTik, worngTik } from "../../assets/animation/animi";
+import { useNavigate } from "react-router-dom";
 
 const LoginAndSignup = () => {
   const [isLogin, setIsLogin] = useState(false);
+
   const [showPopup, setShowPopup] = useState({
     message: "",
-    icon: "",
+    lottie: "",
     show: false,
   });
 
-
-  const [show, setShow] = useState(false)
+  // const [show, setShow] = useState(false)
  
   const theme = useSelector((store) => store.themeReducer.theme);
   const dispatch = useDispatch();
 
-  const errorMessage = useSelector((store) => store.authReducer.errorMessage);
-  const successMessage = useSelector(
-    (store) => store.authReducer.successMessage
-  );
+  const navigate = useNavigate();
 
-  console.log(errorMessage,successMessage)
-  const handleSuccessMessage = () => {
-    setShowPopup({
-      message: successMessage,
-      lottie: "success",
-      show: true,
-    });
+  const redirectToHome = () => {
+    navigate("/");
   };
-  const handleErrorMessage = () => {
-    setShowPopup({
-      message: errorMessage,
-      lottie: "error",
-      show: true,
-    });
-  };
+
+
+  // console.log(errorMessage,successMessage)
+
+  // const handleSuccessMessage = () => {
+  //   setShowPopup({
+  //     message: successMessage,
+  //     lottie: "success",
+  //     show: true,
+  //   });
+  //   setShow(!show)
+  // };
+  // const handleErrorMessage = () => {
+  //   setShowPopup({
+  //     message: errorMessage,
+  //     lottie: "error",
+  //     show: true,
+  //   });
+    
+  //   setShow(!show)
+  // };
+
+  
 
   const handleLoginAndSign = () => {
     setIsLogin((p) => !p);
   };
   const handleLoginWithGoogle = () => {
-    dispatch(loginWithGoogle(handleErrorMessage, handleSuccessMessage));
-    handleTogglePopup();
+    dispatch(loginWithGoogle(redirectToHome));
   };
   const handleLoginWithFacebook = () => {
-    dispatch(loginWithFacebook(handleErrorMessage, handleSuccessMessage));
-    handleTogglePopup();
+    dispatch(loginWithFacebook(redirectToHome));
   };
-  const handleTogglePopup = () => {
-    setShow(!showPopup.show);
-  };
-
   return (
     <div
       className={`grid grid-cols-1 md:grid-cols-2 max-w-screen-xl m-auto gap-5 p-5 font-Poppins justify-center items-center ${
@@ -73,7 +76,7 @@ const LoginAndSignup = () => {
     >
       <div className="flex-1">
         {isLogin ? (
-          <Signup onClick={handleLoginAndSign} />
+          <Signup onClick={handleLoginAndSign}/>
         ) : (
           <Login onClick={handleLoginAndSign} />
         )}
@@ -117,7 +120,6 @@ const LoginAndSignup = () => {
           </h2>
         )}
       </div>
-      {show && <PopUpDialog showPopup={showPopup}/>}
     </div>
   );
 };
