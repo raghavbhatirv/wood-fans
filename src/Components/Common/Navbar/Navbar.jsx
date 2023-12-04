@@ -66,6 +66,10 @@ const Navbar = () => {
     navigate("/user/profile")
   };
 
+  const toCartPage = () => {
+    navigate("/cart");
+  };
+
   return (
     <div>
       <div id={styles["navbar-id"]} className="max-sm:bg-gray-200 shadow">
@@ -141,9 +145,13 @@ const Navbar = () => {
                   </div>
                   <div className="flex items-center justify-between gap-5">
                     <div className="relative">
-                      <Link to="/cart">
-                        <img className="w-8 max-sm:w-9" src={shoppingbag}></img>
-                      </Link>
+                      {/* <Link to="/cart"> */}
+                      <img
+                        className="w-8 max-sm:w-9 hover:cursor-pointer"
+                        onClick={toCartPage}
+                        src={shoppingbag}
+                      ></img>
+                      {/* </Link> */}
                       <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
                         {cartValue}
                       </p>
