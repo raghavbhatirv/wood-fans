@@ -25,11 +25,16 @@ Welcome to **Wood Fans**, a haven where craftsmanship and comfort converge to re
 
 ### Specializations
 
-Discover our expertise in two primary categories:
+Discover our expertise in four primary categories:
 
-1. **Sofa Furniture:** Immerse yourself in the luxurious comfort of our thoughtfully crafted sofa collection, combining aesthetics with functionality for a cozy living experience.
+1. **Sofa Furniture:** Immerse yourself in the luxurious comfort of our thoughtfully crafted sofa collection. Each piece combines aesthetics with functionality for a cozy living experience.
 
-2. **Children's Furniture:** Explore a delightful array of furniture tailored specifically for children, where safety meets creativity, making their spaces as special as they are.
+2. **Bedroom Furniture:** Elevate your sleep sanctuary with our collection of meticulously designed beds. Experience a perfect blend of comfort and style for a restful night's sleep.
+
+3. **Children's Furniture:** Explore a delightful array of furniture tailored specifically for children. Our safe and creative designs make their spaces as special as they are.
+
+4. **Armchairs:** Unwind in style with our elegant armchairs. Crafted for both comfort and aesthetics, these pieces add a touch of sophistication to any room.
+
 
 ## Live Demo
 
