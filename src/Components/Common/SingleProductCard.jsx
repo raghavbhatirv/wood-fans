@@ -1,6 +1,6 @@
 import React from "react";
 
-function SingleProductCard(product) {
+function SingleProductCard({ product, redirectToDetail }) {
   const { images, price, name, category } = product;
 
   return (
@@ -11,12 +11,18 @@ function SingleProductCard(product) {
             src={images[0]}
             alt={`loading: ${name}`}
             className="border transform transition duration-500 hover:scale-105 hover:cursor-pointer"
+            onClick={() => redirectToDetail(product.id)}
           />
         </div>
 
         <div className="flex flex-col gap-1.5 text-gray-900 py-4">
           <p className="text-xs">from ₹{price}</p>
-          <h3 className="text-lg hover:cursor-pointer">{name}</h3>
+          <h3
+            className="text-lg hover:cursor-pointer"
+            onClick={() => redirectToDetail(product.id)}
+          >
+            {name}
+          </h3>
           <p className="text-sm text-gray-500">{category}</p>
         </div>
       </div>

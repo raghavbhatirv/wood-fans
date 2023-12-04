@@ -3,7 +3,8 @@ import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useRef } from "react";
 
-const DropDwonSelector = ({ data, text }) => {
+
+const DropDwonSelector = ({ data, purpose }) => {
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
   const modalRef = useRef();
@@ -33,7 +34,8 @@ const DropDwonSelector = ({ data, text }) => {
           ? selected?.length > 25
             ? selected?.substring(0, 25) + "..."
             : selected
-          : text}
+
+          : `${purpose}`}
         <BiChevronDown size={20} className={`${open && "rotate-180"}`} />
       </div>
       <ul

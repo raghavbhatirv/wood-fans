@@ -1,55 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import UserDetailsSection from "../Components/UserProfile/UserDetailsSection";
+import { storeDB, auth, doc, getDoc } from "../Services/firebaseConfig";
 
 function UserProfile() {
   const [current, setCurrent] = useState("My Profile");
+  const [userData, setUserData] = useState(null);
+  const [uid, setUid] = useState("");
+  const handleClick = (section) => {
+    setCurrent(section);
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const docRef = doc(storeDB, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        setUid(user.uid);
+        if (docSnap.exists()) {
+          setUserData(docSnap.data());
+        } else {
+          console.log("No such document!");
+        }
+      } else {
+        setUserData(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleUserUpdate = (updatedUserData) => {
+    setUserData(updatedUserData);
+  };
+
   return (
     <div>
       <div className="flex px-20 mt-10 gap-5">
-        <div className="w-2/5 px-4 py-5">
-          <div className="flex items-center gap-4 justify-center border-b">
+        <div className={`w-2/5 px-4 py-5 text-gray-800`}>
+          <div
+            onClick={() => handleClick("My Profile")}
+            className={`flex items-center gap-4 justify-center py-5 hover:cursor-pointer ${
+              current === "My Profile"
+                ? "border-b-2 border-primary-yellow text-primary-yellow"
+                : "border-b"
+            }`}
+          >
             <div>
               <i className="fa-regular fa-user text-4xl"></i>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-lg">My Profile</p>
-              <p className="text-xs text-gray-400">Since 23rd Jul 2020</p>
+            </div>
+          </div>
+          <div
+            onClick={() => handleClick("My Orders")}
+            className={`flex items-center gap-4 justify-center py-5 hover:cursor-pointer ${
+              current === "My Orders"
+                ? "border-b-2 border-primary-yellow text-primary-yellow"
+                : "border-b"
+            }`}
+          >
+            <div>
+              <i className="fa-solid fa-box text-4xl "></i>
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-lg">My Orders</p>
             </div>
           </div>
         </div>
-        <div className="w-3/5 flex flex-col gap-5">
-          <div className="px-4 py-5 border">
-            <div className="flex justify-between text-xl py-5">
-              <p className="font-semibold">My Details</p>
-              <p className="text-yellow-500 hover:cursor-pointer">Edit</p>
-            </div>
-            <div>
-              <div className="flex justify-between text-gray-700 border-b border-gray-100 py-3">
-                <p>Name</p>
-                <p>Narayan Das</p>
-              </div>
-              <div className="flex justify-between text-gray-700 border-b border-gray-100 py-3">
-                <p>Mobile Number</p>
-                <p>9382286680</p>
-              </div>
-              <div className="flex justify-between text-gray-700 border-b border-gray-100 py-3">
-                <p>Email ID</p>
-                <p>workmail.narayan@gmail.com</p>
-              </div>
-            </div>
-          </div>
-          <div className="px-4 py-5 border">
-            <div>
-              <h3 className="text-xl font-semibold">
-                Add an Address for Smoother Checkout
-              </h3>
-            </div>
-            <div className="flex justify-end">
-              <button className="border font-medium text-yellow-500 rounded border-primary-yellow px-5 py-3">
-                Add New Address
-              </button>
-            </div>
-          </div>
-        </div>
+        {current === "My Profile" && (
+          <UserDetailsSection
+            userData={userData}
+            uid={uid}
+            onUserUpdate={handleUserUpdate}
+          />
+        )}
       </div>
     </div>
   );

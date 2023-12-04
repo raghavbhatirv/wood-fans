@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, onAuthStateChanged } from 'firebase/auth'
-import { getFirestore, collection, query, where, getDocs, addDoc, getDoc } from 'firebase/firestore'
+import { getFirestore, collection, query, where, getDocs, addDoc, getDoc, arrayUnion, doc, updateDoc, arrayRemove, writeBatch } from 'firebase/firestore'
 
 
 
@@ -40,6 +40,12 @@ export {
      query,
      where,
      getDocs,
+     updateDoc,
+     doc,
      addDoc,
-     getDoc
+     getDoc,
+     arrayUnion,
+     arrayRemove,
+     writeBatch
+
 }
