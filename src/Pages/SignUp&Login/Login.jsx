@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { stringify } from "postcss";
 import { useNavigate } from "react-router-dom";
 
+
 const Login = ({ onClick }) => {
   const theme = useSelector((store) => store.themeReducer.theme);
 
@@ -18,27 +19,16 @@ const Login = ({ onClick }) => {
 
   const navigate = useNavigate();
 
-  const errorMessage = useSelector((store) => store.authReducer.errorMessage);
-  const successMessage = useSelector(
-    (store) => store.authReducer.successMessage
-  );
-
-  if (successMessage) {
-    toast.success(successMessage);
-  }
-  if (errorMessage) {
-    toast.error(errorMessage);
-  }
   const redirectToHome = () => {
     navigate("/");
   };
 
-  const handleTogglePopup = () => {};
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleTogglePopup();
+
     dispatch(loginWithEmailAndPassword(email, password, redirectToHome));
 
+   
     // RememberMe functionalites
     /*
     if (rememberMe) {
@@ -100,6 +90,7 @@ const Login = ({ onClick }) => {
         type="button"
         onClick={onClick}
       />
+   
     </>
   );
 };

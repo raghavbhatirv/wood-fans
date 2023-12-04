@@ -8,6 +8,8 @@ import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
 import { fetchCartData } from "../../../Redux/Products/action";
 import { useId } from "react";
+import { BiChevronDown } from "react-icons/bi";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Navbar = () => {
   const category = useSelector((store) => store.dataReducer);
@@ -17,18 +19,21 @@ const Navbar = () => {
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
   const [authStatus, setAuthStatus] = useState(null);
-  const userName = authStatus?.displayName?.split(" ");
+  let userName = [];
   const isMounted = useRef(true);
   // const userId = auth?.currentUser?.uid;
   const { cartData } = useSelector((store) => store.cartReducer);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (isMounted.current) {
-        setAuthStatus(user);
-        const userId = user?.uid;
-        if (userId) {
-          dispatch(fetchCartData(userId));
+      if (user) {
+        if (isMounted.current) {
+          setAuthStatus(user);
+          const userId = user?.uid;
+          if (userId) {
+            dispatch(fetchCartData(userId));
+          }
         }
+        userName = user?.displayName?.split(" ");
       }
     });
     return () => {
@@ -56,6 +61,13 @@ const Navbar = () => {
   const mobileMenuLoginBtn = () => {
     navigate("/login");
     setMobileMenuActive(false);
+  };
+  const handleVisitProfile = () => {
+    navigate("/user/profile")
+  };
+
+  const toCartPage = () => {
+    navigate("/cart");
   };
 
   return (
@@ -98,22 +110,29 @@ const Navbar = () => {
                   </ul>
                 </div>
                 <div className="flex justify-between items-center gap-3.5">
-                  <div className="border border-solid border-gray-200 rounded-md max-xl:hidden p-1.5 bg-white flex items-center">
+                  {/* <div className="border border-solid border-gray-200 rounded-md max-xl:hidden p-1.5 bg-white flex items-center">
                     <input
                       onChange={(e) => {
                         setSearch(e.target.value);
                       }}
                       className="w-40 focus:outline-none rounded-md text-xs"
-                      type="text "
+                      type="text"
                       placeholder="Search product"
-                    ></input>
+                    />
+
                     <a onClick={searchData} href="#">
                       <i className="fa-solid fa-magnifying-glass"></i>
                     </a>
-                  </div>
+                    
+                  </div> */}
+
                   <div className="max-sm:hidden">
                     {authStatus ? (
-                      <p className=" font-medium text-sm">
+                      <p
+                        className=" font-medium text-sm cursor-pointer"
+                        onClick={handleVisitProfile}
+
+                      >
                         Hello, {userName[0]}
                       </p>
                     ) : (
@@ -126,9 +145,13 @@ const Navbar = () => {
                   </div>
                   <div className="flex items-center justify-between gap-5">
                     <div className="relative">
-                      <Link to="/cart">
-                        <img className="w-8 max-sm:w-9" src={shoppingbag}></img>
-                      </Link>
+                      {/* <Link to="/cart"> */}
+                      <img
+                        className="w-8 max-sm:w-9 hover:cursor-pointer"
+                        onClick={toCartPage}
+                        src={shoppingbag}
+                      ></img>
+                      {/* </Link> */}
                       <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
                         {cartValue}
                       </p>
