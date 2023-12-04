@@ -7,6 +7,8 @@ import ProductPage from "../Components/ProductPage/ProductPage";
 import { PrivateRoute } from "./PrivateRoute";
 import SingleProduct from "../Pages/SingleProduct";
 import UserProfile from "..//Pages/UserProfile";
+import OrderConfirmation from "../Components/OrderConfirmation";
+
 const AllRoutes = () => {
   return (
     <Routes>
@@ -15,6 +17,8 @@ const AllRoutes = () => {
       <Route path="/products/:category" element={<ProductPage />}></Route>
       <Route path="/product/:id" element={<SingleProduct />}></Route>
       <Route path="/cart" element={<UserProfile />}></Route>
+      {/* <Route path="/cart" element={<Cart />}></Route> */}
+      <Route path="/success" element={<OrderConfirmation />}></Route>
     </Routes>
   );
 };
