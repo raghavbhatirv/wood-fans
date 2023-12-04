@@ -31,18 +31,26 @@ const cart = () => {
   const [cartTotal, setCartTotal] = useState(30000);
   const [coupon, setCoupon] = useState("");
   const [message, setMessage] = useState("");
+  const [originalPrice, setOriginalPrice] = useState(subtotalValue); // assuming subtotalValue is defined
+
+  const updateQuantity = (quantity) => {
+    setSubtotalValue(originalPrice * quantity);
+    setCartTotal(originalPrice * quantity);
+  };
 
   const [cart, setCart] = useState(cartData);
   const navigate = useNavigate();
   const handleCouponChange = () => {
     if (coupon.toUpperCase() === "TEAM3") {
       setMessage({ text: "You got 30% off!", color: "text-green-600" });
-      setDiscount(9000);
-      setCartTotal(21000);
+      setDiscount(subtotalValue * 0.3);
+      let newTotal = subtotalValue - subtotalValue * 0.3;
+      setCartTotal(newTotal);
     } else {
       setMessage({ text: "Invalid coupon.", color: "text-red-600" });
     }
   };
+
   useEffect(() => {
     setCart(cartData);
     if (cartData?.length > 0) {
@@ -68,6 +76,7 @@ const cart = () => {
   };
 
   const toCheckout = () => {
+    localStorage.setItem("cartTotal", cartTotal);
     navigate("/checkout");
   };
   //   const getCartData = async (userId) => {
@@ -121,6 +130,7 @@ const cart = () => {
                       key={index}
                       Productid={Product.productId}
                       btnonClick={btnonClick}
+                      updateQuantity={updateQuantity}
                     />
                   ))}
                 </div>
