@@ -15,7 +15,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
-  const [cartValue, setCartValue] = useState(0);
+  const [cartValue, setCartValue] = useState(0); 
   const [authStatus, setAuthStatus] = useState(null);
   const userName = authStatus?.displayName?.split(" ");
   const isMounted = useRef(true);
