@@ -19,7 +19,7 @@ const Navbar = () => {
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
   const [authStatus, setAuthStatus] = useState(null);
-  let userName = [];
+  let userName = authStatus?.displayName?.split(" ");
   const isMounted = useRef(true);
   // const userId = auth?.currentUser?.uid;
   const { cartData } = useSelector((store) => store.cartReducer);
