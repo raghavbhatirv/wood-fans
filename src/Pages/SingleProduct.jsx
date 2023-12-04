@@ -24,7 +24,7 @@ import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
 import { useState } from "react";
 import PopupMessage from "../Components/Common/PopupMessage";
 import { useDispatch } from "react-redux";
-import { addToCart, fetchCartData } from "../Redux/Products/Action";
+import { addToCart, fetchCartData } from "../Redux/Products/action";
 const sizeArray = ["Big", "Average", "Small"];
 const quantityArray = [1, 2, 3, 4];
 

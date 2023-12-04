@@ -3,14 +3,14 @@ import Hero from "../Components/Homepage/Hero";
 import BuyersChoice from "../Components/Homepage/BuyersChoice";
 import Emptycart from "./Emptycart";
 import { useSelector } from "react-redux";
-import { fetchCartData } from "../Redux/Products/Action";
+import { fetchCartData } from "../Redux/Products/action";
 import { onAuthStateChanged, auth } from "../Services/firebaseConfig";
 import Cartitem from "../Components/Cartitem";
 
 const cart = () => {
     const cartDetails = useSelector((store) => store.cartReducer);
-    console.log(cartDetails)
     const { cartData } = cartDetails;
+    console.log(cartData)
     const [cartitemsCount, setCartitemsCount] = useState(0);
     const [cartEmpty, setCartEmpty] = useState(false);
 
@@ -19,8 +19,6 @@ const cart = () => {
     const [cartTotal, setCartTotal] = useState(0);
     const [coupon, setCoupon] = useState('');
     const [message, setMessage] = useState('');
-    // const [userid, setUserid] = useState(null);
-    const isMounted = useRef(true);
 
     const handleCouponChange = () => {
         if (coupon.toUpperCase() === 'TEAM3') {
@@ -29,24 +27,20 @@ const cart = () => {
             setMessage({ text: 'Invalid coupon.', color: 'text-red-600' });
         }
     };
-
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (isMounted.current) {
-                const userid = user?.uid;
-                if (userid) {
-                    
-                }
-            }
-        });
         if (cartData?.length > 0) {
             setCartEmpty(false);
-            setCartitemsCount(cartData?.length);
+            setCartitemsCount(cartData.length);
         } else {
             setCartEmpty(true);
             setCartitemsCount(0);
         }
-    }, [cartitemsCount])
+    
+        return () => {
+            unsubscribeAuth();
+        };
+    }, []);
+    
 
     const onClickEvent = (action, id)=>{
         if(action == "Remove"){
@@ -89,7 +83,12 @@ const cart = () => {
                                     </div>
                                     {/* Items Here */}
                                     <div>
-                                        <Cartitem title={"LOVELY DAVE"} price={"30000.0"} color={"Black"} image={"https://api.woodfans.ru/storage/uploads/images/x9V57EeEsrvL9zWFSIUSK1766CK76PQ93XjrLDw1_widened_900.webp"} btnonClick={onClickEvent} id={2}/>
+                                        {
+                                            cartData.map((Product)=>(
+                                                <Cartitem Productid={Product.productId}/>
+                                            ))
+                                        }
+                                        
                                     </div>
                                 </div>
                             </div>

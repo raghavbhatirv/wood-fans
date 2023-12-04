@@ -1,23 +1,45 @@
 import { useEffect, useState } from "react";
 import Button from "./Common/Button";
+import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
 
-const Cartitem = ({ title, price, color, image, btnonClick, id }) => {
-    const [originalprice, setOriginal] = useState(0);
-    const [discount, setDiscount] = useState(0);
-    const [quantity, setQuantity] = useState(1);
-
-    const generateStrikethroughPrice = (price) => {
-        const discountPercentage = Math.floor(Math.random() * (50 - 40 + 1) + 40);
-        setDiscount(discountPercentage)
-        const discountedPrice = price *1.5;
-        setOriginal(discountedPrice);
-    }
+const Cartitem = ({Productid}) => {
+    const [cartItemData, setCartItemData] = useState({});
+    console.log(Productid);
     useEffect(() => {
-        generateStrikethroughPrice(price);
-    }, [])
+        const fetchProductData = async () => {
+          try {
+            const productDocRef = doc(storeDB, "products", Productid);
+            const productDocSnapshot = await getDoc(productDocRef);
+            if (productDocSnapshot.exists()) {
+                console.log(productDocSnapshot.data())
+                setCartItemData({ id: Productid, ...productDocSnapshot.data()});
+            } else {
+              console.log("No such document!");
+            }
+          } catch (error) {
+            console.error("Error fetching product data:", error);
+          }
+        };
+
+        fetchProductData();
+      }, [Productid]);
+      console.log(cartItemData);
+    // const [originalprice, setOriginal] = useState(0);
+    // const [discount, setDiscount] = useState(0);
+    // const [quantity, setQuantity] = useState(1);
+
+    // const generateStrikethroughPrice = (price) => {
+    //     const discountPercentage = Math.floor(Math.random() * (50 - 40 + 1) + 40);
+    //     setDiscount(discountPercentage)
+    //     const discountedPrice = price *1.5;
+    //     setOriginal(discountedPrice);
+    // }
+    // useEffect(() => {
+    //     generateStrikethroughPrice(price);
+    // }, [])
     return (
         <div className="bg-gray-100 rounded-lg my-2 p-2">
-            <div className="flex justify-between items-center">
+            {/* <div className="flex justify-between items-center">
                 <div className="flex W-5/12 items-center">
                     <div className="w-32">
                         <img className="object-cover max-w-full max-h-full " src={image}></img>
@@ -43,7 +65,7 @@ const Cartitem = ({ title, price, color, image, btnonClick, id }) => {
                     <h2 className="opacity-50 line-through">{originalprice}₹</h2>
                     <h2 className="text-green-500">{discount}%</h2>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
