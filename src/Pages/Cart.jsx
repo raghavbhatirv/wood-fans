@@ -18,8 +18,7 @@ import { useDebugValue } from "react";
 import { useNavigate } from "react-router-dom";
 
 const cart = () => {
-  const cartDetails = useSelector((store) => store.cartReducer);
-  const { cartData } = cartDetails;
+  const { cartData } = useSelector((store) => store.cartReducer);
   const dispatch = useDispatch();
   //   const [cartData, setCartData] = useState([]);
   console.log(cartData);
@@ -38,7 +37,6 @@ const cart = () => {
     setCartTotal(originalPrice * quantity);
   };
 
-  const [cart, setCart] = useState(cartData);
   const navigate = useNavigate();
   const handleCouponChange = () => {
     if (coupon.toUpperCase() === "TEAM3") {
@@ -52,7 +50,6 @@ const cart = () => {
   };
 
   useEffect(() => {
-    setCart(cartData);
     if (cartData?.length > 0) {
       setCartEmpty(false);
       setCartitemsCount(cartData.length);
@@ -66,8 +63,6 @@ const cart = () => {
     if (action == "Remove") {
       // Cart Remove Logic
       dispatch(moveFromCartToWishlist(id, userId));
-      const updatedCart = cartData.filter((product) => product.id === id);
-      setCart(updatedCart);
     } else if (action == "Wishlist") {
       //wiSH lIST lOGIC
     } else if (action == "QuantityMinus") {
@@ -125,7 +120,7 @@ const cart = () => {
                 </div>
                 {/* Items Here */}
                 <div>
-                  {cart.map((Product, index) => (
+                  {cartData.map((Product, index) => (
                     <Cartitem
                       key={index}
                       Productid={Product.productId}

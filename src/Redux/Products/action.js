@@ -38,10 +38,35 @@ export const addToCart = (productId, userId) => async (dispatch) => {
                 cart: arrayUnion({ productId, quantity: 1 })
             });
         }
+        dispatch(fetchCartData(userId));
     } catch (error) {
         console.log(error);
     }
 };
+
+
+
+
+
+export const getCartDataRequest = () => ({ type: CART_GET_REQUEST });
+export const getCartDataSuccess = (data) => ({ type: CART_GET_SUCCESS, payload: data });
+export const getCartDataFailure = (error) => ({ type: CART_GET_FAILURE, payload: error });
+
+export const fetchCartData = (userId) => async (dispatch) => {
+    dispatch(getCartDataRequest());
+    try {
+        const userRef = doc(storeDB, 'users', userId);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.data();
+        const cartData = userData.cart;
+        dispatch(getCartDataSuccess(cartData));
+    } catch (error) {
+        console.log(error);
+        dispatch(getCartDataFailure(error));
+    }
+};
+
+
 
 
 // Do not use in cart page.
@@ -156,25 +181,6 @@ export const moveFromCartToWishlist = (productId, userId) => async (dispatch) =>
 
     } catch (error) {
         console.log(error);
-    }
-};
-
-
-export const getCartDataRequest = () => ({ type: CART_GET_REQUEST });
-export const getCartDataSuccess = (data) => ({ type: CART_GET_SUCCESS, payload: data });
-export const getCartDataFailure = (error) => ({ type: CART_GET_FAILURE, payload: error });
-
-export const fetchCartData = (userId) => async (dispatch) => {
-    dispatch(getCartDataRequest());
-    try {
-        const userRef = doc(storeDB, 'users', userId);
-        const userSnap = await getDoc(userRef);
-        const userData = userSnap.data();
-        const cartData = userData.cart;
-        dispatch(getCartDataSuccess(cartData));
-    } catch (error) {
-        console.log(error);
-        dispatch(getCartDataFailure(error));
     }
 };
 

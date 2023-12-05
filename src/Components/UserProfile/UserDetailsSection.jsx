@@ -23,7 +23,6 @@ function UserDetailsSection({ userData, uid }) {
     };
     await updateDoc(userDoc, updatedUserData);
     setIsEditing(false);
-    onUserUpdate(updatedUserData);
   };
 
   return (
