@@ -5,13 +5,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import Button from "../Button";
-import { setUserData } from "../../../Redux/Auth/action";
+import { fetchCartData } from "../../../Redux/Products/action";
+import { fetchUserData } from "../common";
 
 const Navbar = () => {
   const { cartData } = useSelector((store) => store.cartReducer);
-  const { userData } = useSelector((store) => store.authReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [userData, setUserData] = useState(null);
+  const [uid, setUid] = useState("");
+
   const [search, setSearch] = useState("");
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
@@ -26,14 +30,26 @@ const Navbar = () => {
   }, [userData]);
 
   useEffect(() => {
-    dispatch(setUserData());
-  }, []);
+    dispatch(fetchCartData(uid));
+  }, [uid]);
 
   useEffect(() => {
     if (cartData?.length > 0) {
       setCartValue(cartData.length);
     }
   }, [cartData]);
+
+  // Firebase get user
+
+  useEffect(() => {
+    let unsubscribe;
+
+    fetchUserData(setUid, setUserData).then((unsub) => {
+      unsubscribe = unsub;
+    });
+
+    return () => unsubscribe && unsubscribe();
+  }, []);
 
   // Mobile menu and navigator functions.
   const toggleMobileMenu = () => {

@@ -2,9 +2,7 @@
 import { auth, googleProvider, storeDB, facebookProvider } from '../../Services/firebaseConfig'
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth'
 import { collection, setDoc, doc, getDocs, getDoc } from 'firebase/firestore'
-import { FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SET_USER_DATA_REQUEST, SET_USER_DATA_SUCCESS, SET_USER_DATA_FAILURE } from './actionType'
-import axios from 'axios'
-import { greenTik, worngTik } from '../../assets/animation/animi'
+import { FORGOT_PASSWORD_FAILURE, FORGOT_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from './actionType'
 
 // Login Action Methods
 const loginRequest = () => {
@@ -161,26 +159,7 @@ const forgotPassword = (email) => async (dispatch) => {
 
 // Set user data.
 
-export const setUserData = () => async (dispatch) => {
-     dispatch({ type: SET_USER_DATA_REQUEST });
 
-     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-          if (user) {
-               const docRef = doc(storeDB, "users", user.uid);
-               const docSnap = await getDoc(docRef);
-
-               if (docSnap.exists()) {
-                    dispatch({ type: SET_USER_DATA_SUCCESS, payload: { uid: user.uid, userData: docSnap.data() } });
-               } else {
-                    dispatch({ type: SET_USER_DATA_FAILURE, payload: "No such document!" });
-               }
-          } else {
-               dispatch({ type: SET_USER_DATA_SUCCESS, payload: { uid: null, userData: null } });
-          }
-     });
-
-     return () => unsubscribe();
-};
 
 // Export functions
 export {
