@@ -22,15 +22,11 @@ const Navbar = () => {
   const [authStatus, setAuthStatus] = useState(null);
   let userName = userData?.name?.split(" ");
   const isMounted = useRef(true);
-  console.log(userData);
   useEffect(() => {
-    if (userData) {
+    if (uid) {
       setAuthStatus(true);
+      dispatch(fetchCartData(uid));
     }
-  }, [userData]);
-
-  useEffect(() => {
-    dispatch(fetchCartData(uid));
   }, [uid]);
 
   useEffect(() => {
