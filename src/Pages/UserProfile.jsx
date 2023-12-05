@@ -1,36 +1,12 @@
 import React, { useState, useEffect } from "react";
 import UserDetailsSection from "../Components/UserProfile/UserDetailsSection";
-import { storeDB, auth, doc, getDoc } from "../Services/firebaseConfig";
+import { useSelector } from "react-redux";
 
 function UserProfile() {
   const [current, setCurrent] = useState("My Profile");
-  const [userData, setUserData] = useState(null);
-  const [uid, setUid] = useState("");
+  const { userData, uid } = useSelector((store) => store.authReducer);
   const handleClick = (section) => {
     setCurrent(section);
-  };
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const docRef = doc(storeDB, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-        setUid(user.uid);
-        if (docSnap.exists()) {
-          setUserData(docSnap.data());
-        } else {
-          console.log("No such document!");
-        }
-      } else {
-        setUserData(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const handleUserUpdate = (updatedUserData) => {
-    setUserData(updatedUserData);
   };
 
   return (
@@ -69,11 +45,7 @@ function UserProfile() {
           </div>
         </div>
         {current === "My Profile" && (
-          <UserDetailsSection
-            userData={userData}
-            uid={uid}
-            onUserUpdate={handleUserUpdate}
-          />
+          <UserDetailsSection userData={userData} uid={uid} />
         )}
       </div>
     </div>

@@ -31,7 +31,6 @@ function SingleProductCard({ product, redirectToDetail }) {
   const handleAddToCart = (productId, userId) => {
     if (userId) {
       dispatch(addToCart(productId, userId));
-      dispatch(fetchCartData(userId));
       setShowPopup(true);
       setTimeout(() => setShowPopup(false), 1000);
     } else {
@@ -98,11 +97,13 @@ function SingleProductCard({ product, redirectToDetail }) {
           <p className="text-gray-700 lg:px-5 md:pl-5">Rs. {product.price}</p>
         </div>
       </div>
-      <div className="flex justify-between lg:p-4 p-2">
+      <div
+        className="flex justify-between lg:p-4 p-2 hover:cursor-pointer"
+        onClick={() => handleAddToCart(productId, userId)}
+      >
         <Button
           text={"Add to Cart"}
           className="bg-gray-600  text-white hover:text-gray-700 rounded-md hover:border-2 hover:border-gray-500"
-          onClick={() => handleAddToCart(productId, userId)}
         />
       </div>
     </div>

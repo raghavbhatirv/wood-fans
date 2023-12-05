@@ -4,46 +4,30 @@ import logo from "../../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import shoppingbag from "../../../assets/shoppingbag.svg";
-import { onAuthStateChanged, auth } from "../../../Services/firebaseConfig";
 import Button from "../Button";
-import { fetchCartData } from "../../../Redux/Products/action";
-import { useId } from "react";
-import { BiChevronDown } from "react-icons/bi";
-import { AiOutlineSearch } from "react-icons/ai";
+import { setUserData } from "../../../Redux/Auth/action";
 
 const Navbar = () => {
-  const category = useSelector((store) => store.dataReducer);
+  const { cartData } = useSelector((store) => store.cartReducer);
+  const { userData } = useSelector((store) => store.authReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [isMobileMenuActive, setMobileMenuActive] = useState(false);
   const [cartValue, setCartValue] = useState(0);
   const [authStatus, setAuthStatus] = useState(null);
-  let userName = authStatus?.displayName?.split(" ");
+  let userName = userData?.name?.split(" ");
   const isMounted = useRef(true);
-  // const userId = auth?.currentUser?.uid;
-  const { cartData } = useSelector((store) => store.cartReducer);
+  console.log(userData);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (isMounted.current) {
-          setAuthStatus(user);
-          const userId = user?.uid;
-          if (userId) {
-            dispatch(fetchCartData(userId));
-          }
-        }
-        userName = user?.displayName?.split(" ");
-      }
-    });
-    return () => {
-      isMounted.current = false;
-      unsubscribe();
-    };
-  }, [dispatch]);
-  const userId = auth?.currentUser?.uid;
-  // const cartData = useCart(userId);
-  // console.log(cartData);
+    if (userData) {
+      setAuthStatus(true);
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    dispatch(setUserData());
+  }, []);
 
   useEffect(() => {
     if (cartData?.length > 0) {
@@ -51,21 +35,21 @@ const Navbar = () => {
     }
   }, [cartData]);
 
+  // Mobile menu and navigator functions.
   const toggleMobileMenu = () => {
     setMobileMenuActive(!isMobileMenuActive);
-  };
-  const searchData = () => {};
-  const toHome = () => {
-    navigate("/");
   };
   const mobileMenuLoginBtn = () => {
     navigate("/login");
     setMobileMenuActive(false);
   };
+  const searchData = () => {};
+  const toHome = () => {
+    navigate("/");
+  };
   const handleVisitProfile = () => {
     navigate("/user/profile");
   };
-
   const toCartPage = () => {
     navigate("/cart");
   };
@@ -132,7 +116,7 @@ const Navbar = () => {
                         className=" font-medium text-sm cursor-pointer"
                         onClick={handleVisitProfile}
                       >
-                        Hello, {userName[0]}
+                        Hello, {userName ? userName[0] : "Loading..."}
                       </p>
                     ) : (
                       <Link to="/login">
@@ -151,9 +135,9 @@ const Navbar = () => {
                         src={shoppingbag}
                       ></img>
                       {/* </Link> */}
-                      {/* <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
+                      <p className="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-yellow-400 text-center rounded-full mt-[-7px] ml-2.5 px-1.5 py-0.5">
                         {cartValue}
-                      </p> */}
+                      </p>
                     </div>
                     <div className="lg:hidden">
                       {isMobileMenuActive ? (
@@ -290,7 +274,9 @@ const Navbar = () => {
           <div className="text-center py-2">
             <div className="pt-1 pb-6">
               {authStatus ? (
-                <p className=" font-medium text-lg">Hello, {userName[0]}</p>
+                <p className=" font-medium text-lg">
+                  Hello, {userName ? userName[0] : "Loading..."}
+                </p>
               ) : (
                 <Link to="/login">
                   <Button

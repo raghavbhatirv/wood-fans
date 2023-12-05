@@ -1,10 +1,12 @@
-import { FORGOT_PASSWORD_FAILURE, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, FORGOT_PASSWORD_SUCCESS } from "./actionType"
+import { FORGOT_PASSWORD_FAILURE, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, FORGOT_PASSWORD_SUCCESS, SET_USER_DATA_REQUEST, SET_USER_DATA_SUCCESS, SET_USER_DATA_FAILURE } from "./actionType"
 
 const initalState = {
      isAuth: false,
      successMessage: "",
      errorMessage: "",
-     loading: false
+     loading: false,
+     uid: null,
+     userData: null
 }
 export const authReducer = (state = initalState, { type, payload }) => {
      switch (type) {
@@ -50,10 +52,28 @@ export const authReducer = (state = initalState, { type, payload }) => {
                     ...state,
                     errorMessage: payload
                }
-          case FORGOT_PASSWORD_SUCCESS :
+          case FORGOT_PASSWORD_SUCCESS:
                return {
                     ...state,
                     successMessage: payload
+               }
+          case SET_USER_DATA_REQUEST:
+               return {
+                    ...state,
+                    loading: true
+               }
+          case SET_USER_DATA_SUCCESS:
+               return {
+                    ...state,
+                    uid: payload.uid,
+                    userData: payload.userData,
+                    loading: false
+               }
+          case SET_USER_DATA_FAILURE:
+               return {
+                    ...state,
+                    loading: false,
+                    errorMessage: payload
                }
 
           default:
