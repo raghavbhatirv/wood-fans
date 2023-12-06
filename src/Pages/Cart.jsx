@@ -3,16 +3,7 @@ import Hero from "../Components/Homepage/Hero";
 import BuyersChoice from "../Components/Homepage/BuyersChoice";
 import Emptycart from "./Emptycart";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCartData,
-  moveFromCartToWishlist,
-} from "../Redux/Products/action";
-// import {
-//   onAuthStateChanged,
-//   auth,
-//   doc,
-//   storeDB,
-// } from "../Services/firebaseConfig";
+import { removeFromCart } from "../Redux/Products/action";
 import Cartitem from "../Components/Cartitem";
 import { useDebugValue } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,8 +11,7 @@ import { useNavigate } from "react-router-dom";
 const cart = () => {
   const { cartData } = useSelector((store) => store.cartReducer);
   const dispatch = useDispatch();
-  //   const [cartData, setCartData] = useState([]);
-  console.log(cartData);
+  // console.log(cartData);
   const [cartitemsCount, setCartitemsCount] = useState(0);
   const [cartEmpty, setCartEmpty] = useState(true);
 
@@ -61,10 +51,9 @@ const cart = () => {
 
   const btnonClick = (action, id, userId) => {
     if (action == "Remove") {
-      // Cart Remove Logic
-      dispatch(moveFromCartToWishlist(id, userId));
+      dispatch(removeFromCart(id, userId));
     } else if (action == "Wishlist") {
-      //wiSH lIST lOGIC
+      dispatch(removeFromCart(id, userId, true));
     } else if (action == "QuantityMinus") {
     } else if (action == "QuantityPlus") {
     }
@@ -74,22 +63,7 @@ const cart = () => {
     localStorage.setItem("cartTotal", cartTotal);
     navigate("/checkout");
   };
-  //   const getCartData = async (userId) => {
-  //     try {
-  //       const userRef = doc(storeDB, "users", userId);
-  //       const userSnap = await getDoc(userRef);
-  //       const userData = userSnap.data();
-  //       const cartData = userData.cart;
-  //       setCartData(cartData);
-  //       console.log(cartData);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
 
-  //   useEffect(() => {
-  //     getCartData();
-  //   }, [userId]);
   return (
     <div className="w-full bg-gray-100">
       {cartEmpty ? (
@@ -120,10 +94,10 @@ const cart = () => {
                 </div>
                 {/* Items Here */}
                 <div>
-                  {cartData.map((Product, index) => (
+                  {cartData.map((product, index) => (
                     <Cartitem
                       key={index}
-                      Productid={Product.productId}
+                      product={product}
                       btnonClick={btnonClick}
                       updateQuantity={updateQuantity}
                     />

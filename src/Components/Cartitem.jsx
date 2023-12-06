@@ -1,37 +1,25 @@
 import { useEffect, useState } from "react";
-import Button from "./Common/Button";
 import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData, moveFromCartToWishlist } from "../Redux/Products/action";
+import {
+  adjustQuantityInCart,
+  decreaseQuantityInCart,
+  increaseQuantityInCart,
+} from "../Redux/Products/action";
+import { fetchSingleProductData } from "./Common/common";
 
-const Cartitem = ({ Productid, btnonClick, updateQuantity }) => {
-  const [cartItemData, setCartItemData] = useState({});
+const Cartitem = ({ product, btnonClick, updateQuantity }) => {
+  const { productId, quantity } = product;
+  const [itemData, setItemData] = useState({});
   const [mainImg, setMainImg] = useState([]);
   const dispatch = useDispatch();
   const userId = auth?.currentUser?.uid;
   useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        const productDocRef = doc(storeDB, "products", Productid);
-        const productDocSnapshot = await getDoc(productDocRef);
-        if (productDocSnapshot.exists()) {
-          //   console.log(productDocSnapshot.data());
-          setMainImg(productDocSnapshot.data().images);
-          setCartItemData({ id: Productid, ...productDocSnapshot.data() });
-        } else {
-          console.log("No such document!");
-        }
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      }
-    };
-
-    fetchProductData();
-  }, [Productid]);
-  const { category, color, id, images, name, price, stock } = cartItemData;
+    fetchSingleProductData(productId, setMainImg, setItemData);
+  }, [productId]);
+  const { category, name, price } = itemData;
   const [originalprice, setOriginal] = useState(0);
   const [discount, setDiscount] = useState(0);
-  const [quantity, setQuantity] = useState(1);
 
   const generateStrikethroughPrice = (price) => {
     const discountPercentage = Math.floor(Math.random() * (50 - 40 + 1) + 40);
@@ -48,20 +36,12 @@ const Cartitem = ({ Productid, btnonClick, updateQuantity }) => {
     updateQuantity(quantity);
   }, [quantity]);
 
-  //   console.log(cartItemData);
-
-  //   const btnonClick = (action) => {
-  //     if (action == "Remove") {
-  //       dispatch(moveFromCartToWishlist(Productid, userId));
-  //       dispatch(fetchData(userId));
-  //       console.log(Productid, " ", userId);
-  //       //   console.log("done");
-  //     } else if (action == "Wishlist") {
-  //       //wiSH lIST lOGIC
-  //     } else if (action == "QuantityMinus") {
-  //     } else if (action == "QuantityPlus") {
-  //     }
-  //   };
+  const increaseQuantity = () => {
+    dispatch(adjustQuantityInCart(productId, userId, 1));
+  };
+  const decreaseQuantity = () => {
+    dispatch(adjustQuantityInCart(productId, userId, -1));
+  };
 
   return (
     <div className="bg-gray-100 rounded-lg my-2 p-2">
@@ -79,7 +59,7 @@ const Cartitem = ({ Productid, btnonClick, updateQuantity }) => {
             <div className="flex flex-wrap gap-2 py-5">
               <button
                 onClick={() => {
-                  btnonClick("Remove", Productid, userId);
+                  btnonClick("Remove", productId, userId);
                 }}
                 className="text-xs bg-primary-yellow p-1 rounded-sm cursor-pointer hover:text-white"
               >
@@ -87,7 +67,7 @@ const Cartitem = ({ Productid, btnonClick, updateQuantity }) => {
               </button>
               <button
                 onClick={() => {
-                  btnonClick("Wishlist", Productid, userId);
+                  btnonClick("Wishlist", productId, userId);
                 }}
                 className="text-xs bg-primary-yellow p-1 rounded-sm text-white cursor-pointer hover:text-black"
               >
@@ -101,7 +81,7 @@ const Cartitem = ({ Productid, btnonClick, updateQuantity }) => {
             <button
               className="bg-black text-white rounded-md w-7 "
               onClick={() => {
-                setQuantity((pre) => pre + 1);
+                increaseQuantity();
               }}
             >
               +
@@ -111,7 +91,7 @@ const Cartitem = ({ Productid, btnonClick, updateQuantity }) => {
               className="bg-black text-white rounded-md w-6"
               onClick={() => {
                 if (quantity > 0) {
-                  setQuantity((pre) => pre - 1);
+                  decreaseQuantity();
                 }
               }}
               disabled={quantity < 2}
@@ -122,8 +102,10 @@ const Cartitem = ({ Productid, btnonClick, updateQuantity }) => {
         </div>
         <div className="text-right">
           <h2 className="font-semibold">₹ {price}</h2>
-          <h2 className="opacity-50 line-through">₹60000</h2>
-          <h2 className="text-green-500">50%</h2>
+          <h2 className="opacity-50 line-through font-light ">
+            ₹ {price * 1.23}
+          </h2>
+          <h2 className="text-green-500">18%</h2>
         </div>
       </div>
     </div>

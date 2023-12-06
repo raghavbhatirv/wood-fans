@@ -45,9 +45,6 @@ export const addToCart = (productId, userId) => async (dispatch) => {
 };
 
 
-
-
-
 export const getCartDataRequest = () => ({ type: CART_GET_REQUEST });
 export const getCartDataSuccess = (data) => ({ type: CART_GET_SUCCESS, payload: data });
 export const getCartDataFailure = (error) => ({ type: CART_GET_FAILURE, payload: error });
@@ -81,100 +78,81 @@ export const addToWishlist = (productId, userId) => async (dispatch) => {
     }
 };
 
-// moveFromWishlistToCart
-export const moveFromWishlistToCart = (productId, userId) => async (dispatch) => {
+export const removeFromWishlist = (productId, userId, moveToCart) => async (dispatch) => {
     try {
         const userRef = doc(storeDB, 'users', userId);
         const batch = writeBatch(storeDB);
-
-        // Add to cart
-        batch.update(userRef, {
-            cart: arrayUnion({ productId, quantity: 1 })
-        });
 
         // Remove from wishlist
         batch.update(userRef, {
             wishlist: arrayRemove(productId)
         });
 
+        // Conditionally add to cart
+        if (moveToCart) {
+            batch.update(userRef, {
+                cart: arrayUnion({ productId, quantity: 1 })
+            });
+        }
+
         await batch.commit();
+        // Optionally, dispatch actions to update the state in your Redux store
+        dispatch(fetchWishlistData(userId));
+        if (moveToCart) {
+            dispatch(fetchCartData(userId));
+        }
     } catch (error) {
         console.log(error);
     }
 };
 
-
-export const increaseQuantityInCart = (productId, userId) => async (dispatch) => {
+export const adjustQuantityInCart = (productId, userId, adjustment) => async (dispatch) => {
     try {
         const userRef = doc(storeDB, 'users', userId);
         const userSnapshot = await getDoc(userRef);
         const userData = userSnapshot.data();
         const cart = userData.cart.map(item =>
-            item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item
+            item.productId === productId ? { ...item, quantity: Math.max(0, item.quantity + adjustment) } : item
         );
 
         await updateDoc(userRef, { cart });
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-export const decreaseQuantityInCart = (productId, userId) => async (dispatch) => {
-    try {
-        const userRef = doc(storeDB, 'users', userId);
-        const userSnapshot = await getDoc(userRef);
-        const userData = userSnapshot.data();
-        const cart = userData.cart.map(item =>
-            item.productId === productId ? { ...item, quantity: Math.max(0, item.quantity - 1) } : item
-        );
-
-        await updateDoc(userRef, { cart });
+        dispatch(fetchCartData(userId));
     } catch (error) {
         console.log(error);
     }
 };
 
 
-
-
-// Use in cart page
-export const removeFromWishlist = (productId, userId) => async (dispatch) => {
+export const removeFromCart = (productId, userId, wishlist) => async (dispatch) => {
     try {
+        // Reference to the user's document in the database
         const userRef = doc(storeDB, 'users', userId);
-        await updateDoc(userRef, {
-            wishlist: arrayRemove(productId)
-        });
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-// moveFromCartToWishlist
-
-export const moveFromCartToWishlist = (productId, userId) => async (dispatch) => {
-    console.log("first");
-    try {
-        const userRef = doc(storeDB, 'users', userId);
+        // Retrieve the user's data
         const userSnapshot = await getDoc(userRef);
         const userData = userSnapshot.data();
 
-        // Check if product exists in cart
+        // Check if the product is in the cart
         const productInCart = userData.cart.find(item => item.productId === productId);
 
         if (productInCart) {
+            // Start a batch write operation
             const batch = writeBatch(storeDB);
 
-            // Remove from cart
+            // Remove the product from the cart
             const newCart = userData.cart.filter(item => item.productId !== productId);
             batch.update(userRef, { cart: newCart });
 
-            // Add to wishlist
-            batch.update(userRef, {
-                wishlist: arrayUnion(productId)
-            });
+            // If wishlist is true, add the product to the wishlist
+            if (wishlist) {
+                batch.update(userRef, {
+                    wishlist: arrayUnion(productId)
+                });
+            }
 
+            // Commit the batch write to the database
             await batch.commit();
-            console.log("second");
+            // Fetch the updated cart data
+            dispatch(fetchCartData(userId));
         } else {
             console.log(`Product with id ${productId} not found in cart.`);
         }
@@ -183,6 +161,7 @@ export const moveFromCartToWishlist = (productId, userId) => async (dispatch) =>
         console.log(error);
     }
 };
+
 
 
 export const getWishlistDataRequest = () => ({ type: WISHLIST_GET_REQUEST });
