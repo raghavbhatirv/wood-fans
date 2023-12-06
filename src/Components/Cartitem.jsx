@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  adjustQuantityInCart,
-  decreaseQuantityInCart,
-  increaseQuantityInCart,
-} from "../Redux/Products/action";
+import {adjustQuantityInCart} from "../Redux/Products/action";
 import { fetchSingleProductData } from "./Common/common";
 
 const Cartitem = ({ product, btnonClick, updateQuantity }) => {
