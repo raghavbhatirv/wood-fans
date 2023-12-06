@@ -40,3 +40,18 @@ export async function fetchUserData(setUid, setUserData) {
     return unsubscribe;
 }
 
+
+export const fetchSingleProductData = async (productId, setMainImg, setItemData) => {
+    try {
+        const productDocRef = doc(storeDB, "products", productId);
+        const productDocSnapshot = await getDoc(productDocRef);
+        if (productDocSnapshot.exists()) {
+            setMainImg(productDocSnapshot.data().images);
+            setItemData({ id: productId, ...productDocSnapshot.data() });
+        } else {
+            console.log("No such document!");
+        }
+    } catch (error) {
+        console.error("Error fetching product data:", error);
+    }
+};
