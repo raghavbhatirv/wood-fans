@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
-import {adjustQuantityInCart} from "../Redux/Products/action";
+import { adjustQuantityInCart } from "../Redux/Products/action";
 import { fetchSingleProductData } from "./Common/common";
 
-const Cartitem = ({ product, btnonClick, updateQuantity }) => {
+const Cartitem = ({ product, btnonClick }) => {
   const { productId, quantity } = product;
   const [itemData, setItemData] = useState({});
   const [mainImg, setMainImg] = useState([]);
@@ -27,10 +27,6 @@ const Cartitem = ({ product, btnonClick, updateQuantity }) => {
     const priceNumber = parseFloat(price);
     generateStrikethroughPrice(priceNumber);
   }, []);
-
-  useEffect(() => {
-    updateQuantity(quantity);
-  }, [quantity]);
 
   const increaseQuantity = () => {
     dispatch(adjustQuantityInCart(productId, userId, 1));

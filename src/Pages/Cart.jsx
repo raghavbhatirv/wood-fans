@@ -5,27 +5,20 @@ import Emptycart from "./Emptycart";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../Redux/Products/action";
 import Cartitem from "../Components/Cartitem";
-import { useDebugValue } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchPricesAndCalculateSubtotal } from "../Components/Common/common";
 
 const cart = () => {
   const { cartData } = useSelector((store) => store.cartReducer);
   const dispatch = useDispatch();
-  // console.log(cartData);
   const [cartitemsCount, setCartitemsCount] = useState(0);
   const [cartEmpty, setCartEmpty] = useState(true);
 
   const [discount, setDiscount] = useState(0.0);
-  const [subtotalValue, setSubtotalValue] = useState(30000);
-  const [cartTotal, setCartTotal] = useState(30000);
+  const [subtotalValue, setSubtotalValue] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
   const [coupon, setCoupon] = useState("");
   const [message, setMessage] = useState("");
-  const [originalPrice, setOriginalPrice] = useState(subtotalValue); // assuming subtotalValue is defined
-
-  const updateQuantity = (quantity) => {
-    setSubtotalValue(originalPrice * quantity);
-    setCartTotal(originalPrice * quantity);
-  };
 
   const navigate = useNavigate();
   const handleCouponChange = () => {
@@ -43,9 +36,11 @@ const cart = () => {
     if (cartData?.length > 0) {
       setCartEmpty(false);
       setCartitemsCount(cartData.length);
+      fetchPricesAndCalculateSubtotal(cartData, setSubtotalValue);
     } else {
       setCartEmpty(true);
       setCartitemsCount(0);
+      setSubtotalValue(0);
     }
   }, [cartData]);
 
@@ -60,7 +55,6 @@ const cart = () => {
   };
 
   const toCheckout = () => {
-    localStorage.setItem("cartTotal", cartTotal);
     navigate("/checkout");
   };
 
@@ -99,7 +93,6 @@ const cart = () => {
                       key={index}
                       product={product}
                       btnonClick={btnonClick}
-                      updateQuantity={updateQuantity}
                     />
                   ))}
                 </div>

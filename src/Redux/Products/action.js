@@ -105,15 +105,24 @@ export const removeFromWishlist = (productId, userId, moveToCart) => async (disp
         console.log(error);
     }
 };
-
 export const adjustQuantityInCart = (productId, userId, adjustment) => async (dispatch) => {
     try {
         const userRef = doc(storeDB, 'users', userId);
         const userSnapshot = await getDoc(userRef);
         const userData = userSnapshot.data();
-        const cart = userData.cart.map(item =>
-            item.productId === productId ? { ...item, quantity: Math.max(0, item.quantity + adjustment) } : item
-        );
+        const cart = userData.cart.map(item => {
+            // Check if the current item matches the product ID
+            if (item.productId === productId) {
+                // If the adjustment is negative and the quantity is 1, return the item as is
+                if (adjustment < 0 && item.quantity === 1) {
+                    return item;
+                }
+                // Otherwise, adjust the quantity
+                return { ...item, quantity: Math.max(0, item.quantity + adjustment) };
+            }
+            // If the current item does not match the product ID, return it unchanged
+            return item;
+        });
 
         await updateDoc(userRef, { cart });
         dispatch(fetchCartData(userId));
