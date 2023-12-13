@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import Hero from "../Components/Homepage/Hero";
 import BuyersChoice from "../Components/Homepage/BuyersChoice";
 import Emptycart from "./Emptycart";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,52 +10,42 @@ import { fetchPricesAndCalculateSubtotal } from "../Components/Common/common";
 const cart = () => {
   const { cartData } = useSelector((store) => store.cartReducer);
   const dispatch = useDispatch();
-  const [cartitemsCount, setCartitemsCount] = useState(0);
+  const [cartItemsCount, setcartItemsCount] = useState(0);
   const [cartEmpty, setCartEmpty] = useState(true);
-
   const [discount, setDiscount] = useState(0.0);
   const [subtotalValue, setSubtotalValue] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const [coupon, setCoupon] = useState("");
   const [message, setMessage] = useState("");
-
   const navigate = useNavigate();
-  const handleCouponChange = () => {
-    if (coupon.toUpperCase() === "TEAM3") {
-      setMessage({ text: "You got 30% off!", color: "text-green-600" });
-      setDiscount(subtotalValue * 0.3);
-      let newTotal = subtotalValue - subtotalValue * 0.3;
-      setCartTotal(newTotal);
-    } else {
-      setMessage({ text: "Invalid coupon.", color: "text-red-600" });
-    }
+
+  const handleCouponChange = (couponCode, subtotal) => {
+    const upperCoupon = couponCode.toUpperCase();
+    return upperCoupon === "TEAM3"
+      ? {
+          text: "You got 30% off!",
+          color: "text-green-600",
+          discount: subtotal * 0.3,
+        }
+      : { text: "Invalid coupon.", color: "text-red-600", discount: 0 };
   };
 
   useEffect(() => {
-    if (cartData?.length > 0) {
-      setCartEmpty(false);
-      setCartitemsCount(cartData.length);
-      fetchPricesAndCalculateSubtotal(cartData, setSubtotalValue);
-    } else {
-      setCartEmpty(true);
-      setCartitemsCount(0);
-      setSubtotalValue(0);
-    }
+    const { length } = cartData || [];
+    setCartEmpty(length === 0);
+    setcartItemsCount(length);
+    fetchPricesAndCalculateSubtotal(cartData, setSubtotalValue, setCartTotal);
   }, [cartData]);
 
-  const btnonClick = (action, id, userId) => {
-    if (action == "Remove") {
+  const btnOnClick = (action, id, userId) => {
+    if (action === "Remove") {
       dispatch(removeFromCart(id, userId));
-    } else if (action == "Wishlist") {
+    } else if (action === "Wishlist") {
       dispatch(removeFromCart(id, userId, true));
-    } else if (action == "QuantityMinus") {
-    } else if (action == "QuantityPlus") {
     }
   };
 
-  const toCheckout = () => {
-    navigate("/checkout");
-  };
+  const toCheckout = () => navigate("/checkout");
 
   return (
     <div className="w-full bg-gray-100">
@@ -92,7 +81,7 @@ const cart = () => {
                     <Cartitem
                       key={index}
                       product={product}
-                      btnonClick={btnonClick}
+                      btnOnClick={btnOnClick}
                     />
                   ))}
                 </div>
@@ -108,7 +97,7 @@ const cart = () => {
                 <div className="flex justify-between py-4 border-b-2 border-gray-100">
                   <div className="text-left">
                     <h2 className="text-black font-medium text-base">
-                      SubTotal ({cartitemsCount} items)
+                      SubTotal ({cartItemsCount} items)
                     </h2>
                     <h2 className="text-black font-medium text-base pt-1">
                       Discount

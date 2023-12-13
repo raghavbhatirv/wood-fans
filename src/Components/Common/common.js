@@ -56,7 +56,7 @@ export const fetchSingleProductData = async (productId, setMainImg, setItemData)
     }
 };
 
-export const fetchPricesAndCalculateSubtotal = async (cartData, setSubtotalValue) => {
+export const fetchPricesAndCalculateSubtotal = async (cartData, setSubtotalValue, setCartTotal) => {
     try {
         let subtotal = 0;
         for (const item of cartData) {
@@ -70,6 +70,7 @@ export const fetchPricesAndCalculateSubtotal = async (cartData, setSubtotalValue
             }
         }
         setSubtotalValue(subtotal);
+        setCartTotal(subtotal)
     } catch (error) {
         console.error("Error fetching product prices:", error);
     }

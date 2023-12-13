@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { storeDB, getDoc, auth, doc } from "../Services/firebaseConfig";
-import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../Services/firebaseConfig";
+import { useDispatch } from "react-redux";
 import { adjustQuantityInCart } from "../Redux/Products/action";
 import { fetchSingleProductData } from "./Common/common";
 
-const Cartitem = ({ product, btnonClick }) => {
+const Cartitem = ({ product, btnOnClick }) => {
   const { productId, quantity } = product;
   const [itemData, setItemData] = useState({});
   const [mainImg, setMainImg] = useState([]);
@@ -14,19 +14,6 @@ const Cartitem = ({ product, btnonClick }) => {
     fetchSingleProductData(productId, setMainImg, setItemData);
   }, [productId]);
   const { category, name, price } = itemData;
-  const [originalprice, setOriginal] = useState(0);
-  const [discount, setDiscount] = useState(0);
-
-  const generateStrikethroughPrice = (price) => {
-    const discountPercentage = Math.floor(Math.random() * (50 - 40 + 1) + 40);
-    setDiscount(discountPercentage);
-    const discountedPrice = price * 1.5;
-    setOriginal(discountedPrice);
-  };
-  useEffect(() => {
-    const priceNumber = parseFloat(price);
-    generateStrikethroughPrice(priceNumber);
-  }, []);
 
   const increaseQuantity = () => {
     dispatch(adjustQuantityInCart(productId, userId, 1));
@@ -51,7 +38,7 @@ const Cartitem = ({ product, btnonClick }) => {
             <div className="flex flex-wrap gap-2 py-5">
               <button
                 onClick={() => {
-                  btnonClick("Remove", productId, userId);
+                  btnOnClick("Remove", productId, userId);
                 }}
                 className="text-xs bg-primary-yellow p-1 rounded-sm cursor-pointer hover:text-white"
               >
@@ -59,7 +46,7 @@ const Cartitem = ({ product, btnonClick }) => {
               </button>
               <button
                 onClick={() => {
-                  btnonClick("Wishlist", productId, userId);
+                  btnOnClick("Wishlist", productId, userId);
                 }}
                 className="text-xs bg-primary-yellow p-1 rounded-sm text-white cursor-pointer hover:text-black"
               >
@@ -80,7 +67,9 @@ const Cartitem = ({ product, btnonClick }) => {
             </button>
             <h2 className="font-semibold">{quantity}</h2>
             <button
-              className="bg-black text-white rounded-md w-6"
+              className={`bg-black text-white rounded-md w-6 ${
+                quantity < 2 ? "hover:cursor-not-allowed" : ""
+              }`}
               onClick={() => {
                 if (quantity > 0) {
                   decreaseQuantity();

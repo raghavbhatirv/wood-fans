@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "./Navbar.module.css";
 import logo from "../../../assets/logo.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import shoppingbag from "../../../assets/shoppingbag.svg";
 import Button from "../Button";
@@ -66,6 +66,20 @@ const Navbar = () => {
     navigate("/cart");
   };
 
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const location = useLocation();
+  useEffect(() => {
+    setDropdownVisible(false);
+  }, [location]);
+
+  const handleMyOrders = () => {
+    // Logic to navigate to My Orders
+  };
+
+  const handleLogout = () => {
+    // Logic to perform Logout
+  };
+
   return (
     <div>
       <div id={styles["navbar-id"]} className="max-sm:bg-gray-200 shadow">
@@ -105,7 +119,7 @@ const Navbar = () => {
                     </a>
                   </ul>
                 </div>
-                <div className="flex justify-between items-center gap-3.5">
+                <div className="flex justify-between items-center gap-8">
                   {/* <div className="border border-solid border-gray-200 rounded-md max-xl:hidden p-1.5 bg-white flex items-center">
                     <input
                       onChange={(e) => {
@@ -124,12 +138,39 @@ const Navbar = () => {
 
                   <div className="max-sm:hidden">
                     {authStatus ? (
-                      <p
-                        className=" font-medium text-sm cursor-pointer"
-                        onClick={handleVisitProfile}
-                      >
-                        Hello, {userName ? userName[0] : "Loading..."}
-                      </p>
+                      <div className="relative">
+                        <p
+                          className="font-medium text-sm cursor-pointer flex items-center"
+                          onClick={() => setDropdownVisible(!dropdownVisible)}
+                        >
+                          Hello, {userName ? userName[0] : "Loading..."}
+                          <i className="fa-solid fa-chevron-down ml-2"></i>{" "}
+                        </p>
+                        {dropdownVisible && (
+                          <div className="dropdown-content absolute right-0 z-10 top-8 w-28">
+                            <ul className="bg-white shadow rounded">
+                              <li
+                                className="p-2 hover:bg-gray-100 cursor-pointer"
+                                onClick={handleVisitProfile}
+                              >
+                                My Profile
+                              </li>
+                              <li
+                                className="p-2 hover:bg-gray-100 cursor-pointer"
+                                onClick={handleMyOrders}
+                              >
+                                My Orders
+                              </li>
+                              <li
+                                className="p-2 hover:bg-gray-100 cursor-pointer"
+                                onClick={handleLogout}
+                              >
+                                Logout
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <Link to="/login">
                         <p className="text-sm font-semibold max-sm:text-base">
@@ -138,6 +179,7 @@ const Navbar = () => {
                       </Link>
                     )}
                   </div>
+
                   <div className="flex items-center justify-between gap-5">
                     <div className="relative">
                       {/* <Link to="/cart"> */}
