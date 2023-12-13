@@ -1,4 +1,4 @@
-import { storeDB, auth, doc, getDoc } from '../../Services/firebaseConfig';
+import { storeDB, auth, doc, getDoc, collection, getDocs, query, where } from '../../Services/firebaseConfig';
 export function filterByCategoryAndNameLength(category, setCurrentProducts, productData) {
     if (!productData) {
         return;
@@ -55,3 +55,23 @@ export const fetchSingleProductData = async (productId, setMainImg, setItemData)
         console.error("Error fetching product data:", error);
     }
 };
+
+export const fetchPricesAndCalculateSubtotal = async (cartData, setSubtotalValue) => {
+    try {
+        let subtotal = 0;
+        for (const item of cartData) {
+            const docRef = doc(storeDB, "products", item.productId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                subtotal += docSnap.data().price * item.quantity;
+            } else {
+                console.log(`No document found for productId: ${item.productId}`);
+            }
+        }
+        setSubtotalValue(subtotal);
+    } catch (error) {
+        console.error("Error fetching product prices:", error);
+    }
+};
+
