@@ -1,32 +1,12 @@
-import React, { useState } from "react";
-import ImageButton from "../../Components/Common/ImageButton";
+import React from "react";
 import {
-  facebook,
-  facebookIcon,
-  google,
-  googleIcon,
-  whiteGoogle,
+  logo,
 } from "../../assets/images";
-import Signup from "./Signup";
-import Login from "./Login";
-import { useDispatch, useSelector } from "react-redux";
-import { loginWithFacebook, loginWithGoogle } from "../../Redux/Auth/action";
-import PopUpDialog from "../../Components/Common/PopUpDialog";
-import { greenTik, worngTik } from "../../assets/animation/animi";
+import { useDispatch } from "react-redux";
+import { loginWithGoogle } from "../../Redux/Auth/action";
 import { useNavigate } from "react-router-dom";
 
 const LoginAndSignup = () => {
-  const [isLogin, setIsLogin] = useState(false);
-
-  const [showPopup, setShowPopup] = useState({
-    message: "",
-    lottie: "",
-    show: false,
-  });
-
-  // const [show, setShow] = useState(false)
- 
-  const theme = useSelector((store) => store.themeReducer.theme);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -35,90 +15,46 @@ const LoginAndSignup = () => {
     navigate("/");
   };
 
-
-  // console.log(errorMessage,successMessage)
-
-  // const handleSuccessMessage = () => {
-  //   setShowPopup({
-  //     message: successMessage,
-  //     lottie: "success",
-  //     show: true,
-  //   });
-  //   setShow(!show)
-  // };
-  // const handleErrorMessage = () => {
-  //   setShowPopup({
-  //     message: errorMessage,
-  //     lottie: "error",
-  //     show: true,
-  //   });
-    
-  //   setShow(!show)
-  // };
-
-  
-
-  const handleLoginAndSign = () => {
-    setIsLogin((p) => !p);
-  };
   const handleLoginWithGoogle = () => {
     dispatch(loginWithGoogle(redirectToHome));
   };
-  const handleLoginWithFacebook = () => {
-    dispatch(loginWithFacebook(redirectToHome));
-  };
+
   return (
-    <div
-      className={`grid grid-cols-1 md:grid-cols-2 max-w-screen-xl m-auto gap-5 p-5 font-Poppins justify-center items-center ${
-        theme ? "text-black" : "text-white p-10"
-      }`}
-      style={{ marginRight: "auto", marginLeft: "auto" }}
-    >
-      <div className="flex-1">
-        {isLogin ? (
-          <Signup onClick={handleLoginAndSign}/>
-        ) : (
-          <Login onClick={handleLoginAndSign} />
-        )}
-
-        <div className="grid grid-cols-2 gap-4 mt-3">
-          <ImageButton
-            image={facebookIcon}
-            className="bg-[#4267b2] md:text-md 2sm:text-[15px] xl:text-lg"
-            text="Login with Facebook"
-            onClick={handleLoginWithFacebook}
-          />
-          <ImageButton
-            image={googleIcon}
-            className="bg-[#4285F4] md:text-md 2sm:text-[15px] xl:text-lg"
-            text="Login with Google"
-            onClick={handleLoginWithGoogle}
-          />
+    <div className="my-6 pb-32 lg:pb-48 py-8">
+      <div className="text-center flex flex-col gap-8 items-center ">
+        <div className="flex justify-center">
+          <img src={logo} />
         </div>
-      </div>
-
-      <div className="rounded-xl border shadow-sm w-[100%] relative hidden md:block">
-        <img
-          src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyiNM1dsSbTJOTUDHzB_Y_GXlD1M9OjJA8PMZLHU8Nt9YUs3ZsJ_Rzo9C5fEE9gvej2QrqCEeMYbULxAhlLEtxuqI1rFis0HqM58w9IEfMQDfbu0uT_bP6CVUUJAI9uNRr0ZIRITZeA04u5RWYXDznygGAr4zXhza-iqKg2Xvp8g5Kj_qf4hhitP8MkP2o/s540/background-31584dde.jpg"
-          className={`rounded-xl h-[575px] bg-contain bg-no-repeat bg-center w-[100%] sticky`}
-        />
-        {isLogin ? (
-          <h2 className="text-x3l lg:text-4xl absolute top-5 left-5 text-black leading-35 font-medium">
-            Unlock a world!
-            <br />
-            <span className="text-[#a52a2a]">of furniture </span>
-            <br />
-            Designs
-          </h2>
-        ) : (
-          <h2 className="text-3xl lg:text-4xl absolute top-5 left-5 text-black leading-35 font-medium">
-            Furniture is meant
-            <br />
-            <span className="text-[#a52a2a]"> to be used</span>
-            <br />
-            and enjoyed
-          </h2>
-        )}
+        <h1 className="lg:text-5xl md:text-4xl text-2xl font-semibold">Walcome to Wood Fans</h1>
+        <button
+          className="w-max flex py-2 px-4 lg:px-6 text-sm lg:text-xl font-bold text-center uppercase align-middle items-center rounded-lg border-2 border-gray-200 gap-3 cursor-pointer transition-all ease-linear hover:scale-105 justify-center"
+          onClick={handleLoginWithGoogle}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid"
+            viewBox="0 0 256 262"
+            className="h-6"
+          >
+            <path
+              fill="#4285F4"
+              d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+            ></path>
+            <path
+              fill="#34A853"
+              d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+            ></path>
+            <path
+              fill="#FBBC05"
+              d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+            ></path>
+            <path
+              fill="#EB4335"
+              d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+            ></path>
+          </svg>
+          Continue with Google
+        </button>
       </div>
     </div>
   );
